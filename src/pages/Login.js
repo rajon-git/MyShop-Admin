@@ -1,9 +1,10 @@
 import React from 'react'
 import CustomInput from '../components/CustomInput'
+import { Link } from 'react-router-dom'
 
 function Login() {
   return (
-    <div className='py-5' style={{background:"#ffd333", minHeight:"100vh"}}>
+    <div className='py-5' style={{background:"#001529", minHeight:"100vh"}}>
       <br/>
       <br/>
       <br/>
@@ -15,7 +16,10 @@ function Login() {
         <form action=''>
         <CustomInput type='text' label='Email Address' id='email'/>
         <CustomInput type='password' label='Password' id='pass'/>
-        <button className='border-0 px-3 py-2 text-white w-100 fw-bold' type='submit' style={{background:"#ffd333"}}>login</button>
+        <div className='mb-3 text-end'>
+          <Link to='/forgot-password'>Forgot Password?</Link>
+        </div>
+        <Link to='/admin' className='border-0 px-3 py-2 text-white w-100 fw-bold text-center text-decoration-none' type='submit' style={{background:"#001529"}}>login</Link>
         </form>
       </div>
     </div>
