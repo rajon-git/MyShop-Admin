@@ -38,9 +38,13 @@ body {
   margin: 0;
 }
 main{
+  height: 85vh;
   overflow-y: scroll;
+  background-color: transparent !important;
 }
-
+ main::-webkit-scrollbar{
+  width: 0px;
+ }
 .ant-menu-title-content{
   font-size: 16px;
 }
@@ -56,4 +60,10 @@ main{
 .ant-layout-header div .badge{
   top: 16px;
   right: -6px;
+}
+.green{
+  color: green;
+}
+.red{
+  color: red;
 }

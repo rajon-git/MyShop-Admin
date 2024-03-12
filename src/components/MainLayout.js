@@ -183,7 +183,9 @@ const MainLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Outlet/>
+          <main>
+             <Outlet/>
+          </main>
         </Content>
       </Layout>
     </Layout>
