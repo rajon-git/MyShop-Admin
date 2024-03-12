@@ -5,13 +5,15 @@ import { ImBlog } from "react-icons/im";
 import { FaUsers } from "react-icons/fa6";
 import { SiBrandfolder } from "react-icons/si";
 import { MdOutlineCategory } from "react-icons/md";
+import { IoNotifications } from "react-icons/io5";
 import { IoMdColorFill } from "react-icons/io";
+import { AiOutlinePicLeft, AiOutlinePicRight  } from "react-icons/ai";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -22,7 +24,12 @@ const MainLayout = () => {
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+        <div className="logo">
+          <h2 className='text-white fs-5 p-3 text-center mb-0'>
+            <span className='sm-logo'>DC</span>
+            <span className='lg-logo'>Dev Corners</span>
+          </h2>
+        </div>
         <Menu
           theme="dark"
           mode="inline"
@@ -135,6 +142,7 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <Header
+        className='d-flex justify-content-between ps-3 pe-5'
           style={{
             padding: 0,
             background: colorBgContainer,
@@ -142,7 +150,7 @@ const MainLayout = () => {
         >
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            icon={collapsed ? <AiOutlinePicRight  /> : <AiOutlinePicLeft />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: '16px',
@@ -150,6 +158,21 @@ const MainLayout = () => {
               height: 64,
             }}
           />
+          <div className='d-flex align-items-center gap-4'>
+            <div className='position-relative'>
+              <IoNotifications className='fs-4'/>
+              <span className='badge bg-warning rounded-circle p-1 position-absolute '>3</span>
+            </div>
+            <div className='d-flex align-items-center gap-3'>
+               <div>
+                <img width={32} height={32} src='https://www.shutterstock.com/image-vector/young-man-anime-style-character-600nw-2313503433.jpg' alt=''/>
+               </div>
+               <div>
+                <h5 className='mb-0'>Rajon</h5>
+                <p className='mb-0'>rajon.zhsust15@gmail.com</p>
+               </div>
+            </div>
+          </div>
         </Header>
         <Content
           style={{
@@ -160,7 +183,7 @@ const MainLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Outlet/>
         </Content>
       </Layout>
     </Layout>

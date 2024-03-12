@@ -18,12 +18,42 @@ body {
   min-width: 80px !important;
   width: 80px !important;
 }
+.sm-logo{
+  display: none;
+
+}
+
+.ant-layout-sider-collapsed .sm-logo{
+  display: block;
+  transition: 0.3s;
+}
+.ant-layout-sider-collapsed .lg-logo{
+  display: none;
+  transition: 0.3s;
+}
 .logo{
-  height: 32px;
+  height: 64px;
   margin: 16px;
   background-color: #ffd333;
   margin: 0;
 }
 main{
   overflow-y: scroll;
+}
+
+.ant-menu-title-content{
+  font-size: 16px;
+}
+.ant-layout-header h5 {
+  line-height: 30px;
+  font-size: 14px;
+}
+.ant-layout-header p {
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.ant-layout-header div .badge{
+  top: 16px;
+  right: -6px;
 }
