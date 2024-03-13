@@ -167,13 +167,7 @@ function Dashboard() {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
-      <div className="my-4">
-        <h3 className="mb-4">Recent Reviews</h3>
-        <div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
+      
     </>
   );
 }
