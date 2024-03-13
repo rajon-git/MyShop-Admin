@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import MainLayout from './components/MainLayout';
+import Enquires from './pages/Enquires';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/admin' element={<MainLayout/>}>
           <Route index element={<Dashboard/>}/>
+          <Route path='enquires' element={<Enquires/>}/>
         </Route>
       </Routes>
     </Router>
