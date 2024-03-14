@@ -1,3 +1,12 @@
+:root{
+  --color-212529: #212529;
+  --color-ffd333: #ffd333;
+  --color-47ad24: #47ad24;
+  --color-e52e2e: #e52e2e;
+  --color-828599: #828599;
+  --color-3d464d: #ed464d;
+  --color-c3d4da: #c3d4da;
+}
 body {
   font-family: Roboto, sans-serif;
 }
@@ -62,12 +71,20 @@ main{
   right: -6px;
 }
 .green{
-  color: green;
+  color: var(--color-47ad24);
 }
 .red{
-  color: red;
+  color: var(--color-212529);
 }
 
 .quill{
   background-color: white;
+}
+.form-control{
+  box-shadow: none;
+  border-color: var(--color-c3d4da);
+}
+.title{
+  font-size: 28px;
+  font-family: Roboto !important;
 }
