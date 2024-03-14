@@ -9,6 +9,7 @@ import Enquires from './pages/Enquires';
 import Bloglist from './pages/Bloglist';
 import BlogCatList from './pages/BlogCatList'
 import Orders from './pages/Orders';
+import Customers from './pages/Customers';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='/admin' element={<MainLayout/>}>
           <Route index element={<Dashboard/>}/>
           <Route path='enquires' element={<Enquires/>}/>
+          <Route path='customers' element={<Customers/>}/>
           <Route path='order' element={<Orders/>}/>
           <Route path='blog-list' element={<Bloglist/>}/>
           <Route path='blog-category-list' element={<BlogCatList/>}/>
