@@ -67,7 +67,7 @@ const MainLayout = () => {
                 {
                   key: 'brand',
                   icon: <SiBrandfolder className='fs-4'/>,
-                  label: 'Brand',
+                  label: 'Add Brand',
                 },
                 {
                   key: 'brand-list',
@@ -77,7 +77,7 @@ const MainLayout = () => {
                 {
                   key: 'category',
                   icon: <MdOutlineCategory className='fs-4'/>,
-                  label: 'Category',
+                  label: 'Add Category',
                 },
                 {
                   key: 'category-list',
