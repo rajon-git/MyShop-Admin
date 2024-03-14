@@ -1,9 +1,7 @@
 import React from "react";
 import { FiArrowDownRight } from "react-icons/fi";
 import { Table } from "antd";
-import { GoArrowUpRight } from "react-icons/go";
 import { Column } from "@ant-design/plots";
-import { type } from "@testing-library/user-event/dist/type";
 const columns = [
   {
     title: "No.",

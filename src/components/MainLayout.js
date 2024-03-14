@@ -8,10 +8,6 @@ import { MdOutlineCategory } from "react-icons/md";
 import { IoNotifications } from "react-icons/io5";
 import { IoMdColorFill } from "react-icons/io";
 import { AiOutlinePicLeft, AiOutlinePicRight  } from "react-icons/ai";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content } = Layout;
@@ -106,7 +102,7 @@ const MainLayout = () => {
               label: 'Orders',
             },
             {
-              key: 'blog',
+              key: 'blogs',
               icon: <FaBloggerB  className='fs-4'/>,
               label: 'Blogs',
               children: [
