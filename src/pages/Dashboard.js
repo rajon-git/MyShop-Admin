@@ -165,7 +165,6 @@ function Dashboard() {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
-      
     </>
   );
 }
