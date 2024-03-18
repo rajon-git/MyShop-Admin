@@ -1,8 +1,8 @@
 import axios from "axios";
 import { base_url } from "../../utils/base_url";
 
-const getUsers = async (user) => {
-  const response = await axios.post(`${base_url}user/all-users`, user);
+const getUsers = async () => {
+  const response = await axios.post(`${base_url}user/all-users`);
   return response.data;
 };
 const customerService = {
