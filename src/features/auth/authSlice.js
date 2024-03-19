@@ -1,47 +1,52 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import authService from "../auth/authService"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import authService from "../auth/authService";
 
-const getUserFromLocalStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+const getUserFromLocalStorage = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : null;
 
 const initialState = {
-    user: getUserFromLocalStorage,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: "",
-}
+  user: getUserFromLocalStorage,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: "",
+};
 
-export const login = createAsyncThunk('auth/admin-login' , async(user,thunkAPI)=>{
+export const login = createAsyncThunk(
+  "auth/admin-login",
+  async (user, thunkAPI) => {
     try {
-        return await authService.login(user);
+      return await authService.login(user);
     } catch (error) {
-        return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error);
     }
-})
+  }
+);
 
 export const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers:{},
-    extraReducers:(builder)=>{
-      builder
-      .addCase(login.pending, (state)=> {
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(login.fulfilled, (state, action)=> {
+      .addCase(login.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
         state.message = "success";
       })
-      .addCase(login.rejected, (state, action)=> {
+      .addCase(login.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
         state.isLoading = false;
-      })
-    }
-})
+      });
+  },
+});
 
-export default authSlice.reducer
+export default authSlice.reducer;

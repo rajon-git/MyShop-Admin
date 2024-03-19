@@ -6,7 +6,7 @@ const getBlogs = async () => {
   return response.data;
 };
 const blogService = {
-    getBlogs,
+  getBlogs,
 };
 
 export default blogService;
