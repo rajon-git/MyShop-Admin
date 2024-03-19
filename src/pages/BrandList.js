@@ -14,6 +14,7 @@ const columns = [
     {
       title: "Title",
       dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: "Action",
@@ -33,8 +34,6 @@ function BrandList() {
     data1.push({
       key: i,
       name: brandState[i].title,
-      product: 32,
-      status: `London, Park Lane no. ${i}`,
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
