@@ -13,7 +13,7 @@ export const createProducts = createAsyncThunk(
     "product/create-products",
     async (productData, thunkAPI) => {
       try {
-        return await productService.createProduct(productData);
+        return await productService.createProducts(productData);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
       }
