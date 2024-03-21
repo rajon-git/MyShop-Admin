@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaCartArrowDown, FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { ImBlog } from "react-icons/im";
@@ -11,6 +13,7 @@ import { AiOutlinePicLeft, AiOutlinePicRight } from "react-icons/ai";
 import { Layout, Menu, Button, theme } from "antd";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
+
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -206,6 +209,17 @@ const MainLayout = () => {
           }}
         >
           <main>
+            <ToastContainer 
+            position="top-right"
+            autoClose={250}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light"
+            />
             <Outlet />
           </main>
         </Content>
