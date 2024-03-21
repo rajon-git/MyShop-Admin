@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaCartArrowDown, FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { ImBlog } from "react-icons/im";
@@ -30,6 +30,7 @@ const MainLayout = () => {
           </h2>
         </div>
         <Menu
+        
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[""]}
@@ -139,13 +140,13 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <Header
-          className="d-flex justify-content-between ps-3 pe-5"
+          className="d-flex justify-content-between ps-3 pe-5 "
           style={{
             padding: 0,
             background: colorBgContainer,
           }}
         >
-          <Button
+          <Button className="button"
             type="text"
             icon={collapsed ? <AiOutlinePicRight /> : <AiOutlinePicLeft />}
             onClick={() => setCollapsed(!collapsed)}
@@ -162,9 +163,7 @@ const MainLayout = () => {
                 3
               </span>
             </div>
-            <div
-              className="d-flex align-items-center gap-3"
-            >
+            <div className="d-flex align-items-center gap-3">
               <div>
                 <img
                   width={32}
@@ -173,10 +172,12 @@ const MainLayout = () => {
                   alt=""
                 />
               </div>
-              <div type="button"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false">
+              <div
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <h5 className="mb-0">Rajon</h5>
                 <p className="mb-0">rajon.zhsust15@gmail.com</p>
               </div>
@@ -185,16 +186,23 @@ const MainLayout = () => {
                 aria-labelledby="dropdownMenuButton1"
               >
                 <li>
-                  <Link className="dropdown-item py-1 mb-1" style={{"height":"auto","lineHeight":"20px"}} to="/">
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
                     View Profile
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item py-1 mb-1"  style={{"height":"auto","lineHeight":"20px"}} to="/">
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
                     Signout
                   </Link>
                 </li>
-                
               </div>
             </div>
           </div>
@@ -209,16 +217,16 @@ const MainLayout = () => {
           }}
         >
           <main>
-            <ToastContainer 
-            position="top-right"
-            autoClose={250}
-            hideProgressBar={false}
-            newestOnTop={true}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            theme="light"
+            <ToastContainer
+              position="top-right"
+              autoClose={250}
+              hideProgressBar={false}
+              newestOnTop={true}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              theme="light"
             />
             <Outlet />
           </main>

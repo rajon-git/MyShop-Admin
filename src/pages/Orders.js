@@ -38,7 +38,7 @@ function Orders() {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getOrders())
-  },[]);
+  },[dispatch]);
   const orderState = useSelector((state)=> state.auth.orders);
   const data1 = [];
 for (let i = 0; i < orderState.length; i++) {

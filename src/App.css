@@ -70,6 +70,40 @@ main{
   top: 16px;
   right: -6px;
 }
+
+/*hello*/
+/* Apply styles for screens smaller than 768px */
+@media (max-width: 768px) {
+  .ant-layout-sider{
+    flex: 0 0 35% !important;
+    max-width: 35% !important;
+    min-width: 35% !important;
+    width: 35% !important;
+  }
+  .ant-layout-sider-collapsed{
+    flex: 0 0 0px !important;
+    max-width: 0px !important;
+    min-width: 0px !important;
+    width: 0px !important;
+  }
+  .ant-menu-title-content{
+    font-size: 12px;
+  }
+  .lg-logo{
+    height: 30px;
+    font-size: 17px;
+    margin-bottom: 2px;
+    background-color: #ffd333;
+    
+  }
+  
+  .ant-menu-item-icon {
+    font-size: 15px !important; /* Reduce icon size */
+  }
+ 
+}
+
+/*end*/
 .green{
   color: var(--color-47ad24);
 }
