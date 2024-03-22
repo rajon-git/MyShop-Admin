@@ -24,7 +24,7 @@ function AddCategory() {
     if (isError) {
       toast.error("Something Went Wrong!");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, isError, isLoading, createdCategory]);
 
   const formik = useFormik({
     initialValues: {
