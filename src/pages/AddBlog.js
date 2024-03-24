@@ -9,7 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { useNavigate } from "react-router-dom";
-import { createBlogs } from "../features/blogs/blogSlice";
+import { createBlogs, resetState } from "../features/blogs/blogSlice";
 import { getCategories } from "../features/bCategory/bcategorySlice";
 
 let schema = yup.object().shape({
@@ -63,8 +63,7 @@ function AddBlog() {
       dispatch(createBlogs(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/blog-list");
-        
+        dispatch(resetState());
       }, 3000);
     },
   });
