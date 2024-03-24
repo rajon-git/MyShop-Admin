@@ -5,6 +5,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaCartArrowDown, FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { ImBlog } from "react-icons/im";
 import { FaUsers } from "react-icons/fa6";
+import { RiCoupon5Line } from "react-icons/ri";
 import { SiBrandfolder } from "react-icons/si";
 import { MdOutlineCategory } from "react-icons/md";
 import { IoNotifications } from "react-icons/io5";
@@ -102,6 +103,23 @@ const MainLayout = () => {
               key: "order",
               icon: <FaClipboardList className="fs-4" />,
               label: "Orders",
+            },
+            {
+              key: "marketing",
+              icon: <FaBloggerB className="fs-4" />,
+              label: "Marketing",
+              children: [
+                {
+                  key: "coupon",
+                  icon: <ImBlog className="fs-4" />,
+                  label: "Add Coupon",
+                },
+                {
+                  key: "coupon-list",
+                  icon: <RiCoupon5Line className="fs-4" />,
+                  label: "Coupon List",
+                },
+              ],
             },
             {
               key: "blogs",
