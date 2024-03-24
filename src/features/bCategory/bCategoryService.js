@@ -1,6 +1,13 @@
 import axios from "axios";
 import { base_url } from "../../utils/base_url";
+import { config } from "../../utils/axiosConfig";
 
+
+const createBlogCategory = async (bcat) => {
+  const response = await axios.post(`${base_url}blogcategory/`, bcat, config);
+
+  return response.data;
+};
 const getBlogCategories = async () => {
   const response = await axios.get(`${base_url}blogcategory/`);
 
@@ -9,6 +16,7 @@ const getBlogCategories = async () => {
 
 const bCategoryService = {
   getBlogCategories,
+  createBlogCategory
 };
 
 export default bCategoryService;
