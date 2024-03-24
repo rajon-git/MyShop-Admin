@@ -8,7 +8,7 @@ const createCoupons = async (coupon) => {
   return response.data;
 };
 const getCoupons = async () => {
-  const response = await axios.get(`${base_url}coupon/`);
+  const response = await axios.get(`${base_url}coupon/`,config);
   return response.data;
 };
 const couponService = {
