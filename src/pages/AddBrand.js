@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { createBrand, resetState } from "../features/brand/brandSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createBrand, getABrand, resetState } from "../features/brand/brandSlice";
 
 let schema = yup.object().shape({
   title: yup.string().required("Brand Name is Required"),
@@ -13,10 +13,23 @@ let schema = yup.object().shape({
 
 function AddBrand() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
-
+  const pathname = location.pathname;
+  const pathnameParts = pathname.split("/");
+const getBrandId = pathnameParts.length >= 4 ? pathnameParts[3] : null;;
   const newBrand = useSelector((state) => state.brand);
-  const { isSuccess, isError, isLoading, createdBrand } = newBrand;
+const { isSuccess, isError, isLoading, createdBrand,brandName } = newBrand;
+useEffect(() => {
+  if (getBrandId !== undefined) {
+    dispatch(getABrand(getBrandId));
+    formik.values.title = brandName;
+  } else {
+    dispatch(resetState());
+  }
+}, [getBrandId]);
+
+ 
   useEffect(() => {
     if (isSuccess && createdBrand) {
       toast.success("Brand Added Successfullly!");
@@ -41,7 +54,7 @@ function AddBrand() {
   });
   return (
     <div>
-      <h4 className="mb-4">Add Brand</h4>
+      <h4 className="mb-4">{getBrandId !== undefined ? "Edit" : "Add"} Brand</h4>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput

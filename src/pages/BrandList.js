@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getBrands } from "../features/brand/brandSlice";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const columns = [
   {
@@ -24,6 +24,7 @@ const columns = [
 
 function BrandList() {
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getBrands());
   }, []);
@@ -35,7 +36,7 @@ function BrandList() {
       name: brandState[i].title,
       action: (
         <>
-          <Link to="/" className=" fs-3 text-danger">
+          <Link to={`/admin/brand/${brandState[i]._id}`} className=" fs-3 text-danger">
             <BiEdit />
           </Link>
           <Link className="ms-3 fs-3 text-danger" to="/">
