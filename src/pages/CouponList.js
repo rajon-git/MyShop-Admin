@@ -26,10 +26,7 @@ const columns = [
     dataIndex: "expiry",
     sorter: (a, b) => a.name.length - b.name.length,
   },
-  {
-    title: "Action",
-    dataIndex: "action",
-  },
+ 
 ];
 
 function CouponList() {
