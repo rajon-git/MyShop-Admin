@@ -31,7 +31,6 @@ function BrandList() {
     setOpen(true);
     setBrandId(e)
   };
-  console.log(brandId);
   const hideModal = () => {
     setOpen(false);
   };
