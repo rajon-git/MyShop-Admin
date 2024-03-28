@@ -42,6 +42,7 @@ function App() {
           <Route path='blog-category' element={<AddBlogCat/>}/>
           <Route path='blog-category-list' element={<BlogCatList/>}/>
           <Route path='color' element={<AddColor/>}/>
+          <Route path='color/:id' element={<AddColor/>}/>
           <Route path='color-list' element={<ColorList/>}/>
           <Route path='category' element={<AddCategory/>}/>
           <Route path='category/:ID' element={<AddCategory/>}/>
