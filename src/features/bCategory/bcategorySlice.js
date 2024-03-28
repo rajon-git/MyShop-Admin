@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import bCategoryService from "../bCategory/bCategoryService";
 
 export const getCategories = createAsyncThunk(
-  "blogCategory/get-categories",
+  "blogCategory/get-blogCategory",
   async (thunkAPI) => {
     try {
       return await bCategoryService.getBlogCategories();
@@ -12,8 +12,19 @@ export const getCategories = createAsyncThunk(
   }
 );
 
+export const getAbCategory = createAsyncThunk(
+  "blogCategory/get-blogCategory",
+  async (id, thunkAPI) => {
+    try {
+      return await bCategoryService.getbCategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const createNewblogCat = createAsyncThunk(
-  "blogCategory/create-category",
+  "blogCategory/create-blogCategory",
   async (catData, thunkAPI) => {
     try {
       return await bCategoryService.createBlogCategory(catData);
@@ -23,6 +34,27 @@ export const createNewblogCat = createAsyncThunk(
   }
 );
 
+export const updateAbCategory= createAsyncThunk(
+  "blogCategory/update-blogCategory",
+  async (bCategory, thunkAPI) => {
+    try {
+      return await bCategoryService.updatebCategory(bCategory);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAbCategory = createAsyncThunk(
+  "blogCategory/delete-blogCategory",
+  async (id, thunkAPI) => {
+    try {
+      return await bCategoryService.deletebCategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const resetState  = createAction("Reset_all");
 const initialState = {
   bCategories: [],
@@ -63,6 +95,51 @@ export const bCategorySlice = createSlice({
         state.createBlogCategory  = action.payload;
       })
       .addCase(createNewblogCat.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(getAbCategory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAbCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.bCategoryName  = action.payload.title;
+      })
+      .addCase(getAbCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateAbCategory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAbCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedbCategory  = action.payload;
+      })
+      .addCase(updateAbCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(deleteAbCategory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAbCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedbCategory  = action.payload;
+      })
+      .addCase(deleteAbCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
