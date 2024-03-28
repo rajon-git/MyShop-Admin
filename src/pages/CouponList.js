@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllCoupons } from "../features/coupon/couponSlice";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -34,6 +35,15 @@ const columns = [
 
 function CouponList() {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [couponId, setCouponId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setCouponId(e);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     dispatch(getAllCoupons());
   }, []);
@@ -47,22 +57,40 @@ function CouponList() {
       expiry: new Date(couponState[i].expiry).toLocaleString(),
       action: (
         <>
-          <Link to="/" className=" fs-3 text-danger">
+          <Link to={`/admin/brand/${couponState[i]._id}`} className=" fs-3 text-danger">
             <BiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(couponState[i]._id)}
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });
   }
+  const deleteCoupon = (e) => {
+    dispatch(deleteABrand(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getAllCoupons());
+    }, 500);
+  };
   return (
     <div>
       <h3 className="mb-4">Brand List</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteCoupon(couponId);
+        }}
+        title="Are you sure, want to delete this Coupon?"
+      />
     </div>
   );
 }
