@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllCoupons } from "../features/coupon/couponSlice";
+import { deleteACoupon, getAllCoupons } from "../features/coupon/couponSlice";
 import CustomModal from "../components/CustomModal";
 
 const columns = [
@@ -13,7 +13,7 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Title",
+    title: "Name",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
@@ -57,7 +57,7 @@ function CouponList() {
       expiry: new Date(couponState[i].expiry).toLocaleString(),
       action: (
         <>
-          <Link to={`/admin/brand/${couponState[i]._id}`} className=" fs-3 text-danger">
+          <Link to={`/admin/coupon/${couponState[i]._id}`} className=" fs-3 text-danger">
             <BiEdit />
           </Link>
           <button
@@ -71,7 +71,7 @@ function CouponList() {
     });
   }
   const deleteCoupon = (e) => {
-    dispatch(deleteABrand(e));
+    dispatch(deleteACoupon(e));
     setOpen(false);
     setTimeout(() => {
       dispatch(getAllCoupons());
@@ -79,7 +79,7 @@ function CouponList() {
   };
   return (
     <div>
-      <h3 className="mb-4">Brand List</h3>
+      <h3 className="mb-4">Coupon List</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
