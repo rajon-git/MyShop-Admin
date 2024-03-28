@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import bCategoryService from "../bCategory/bCategoryService";
 
 export const getCategories = createAsyncThunk(
-  "blogCategory/get-blogCategory",
+  "blogCategory/get-blogCategories",
   async (thunkAPI) => {
     try {
       return await bCategoryService.getBlogCategories();
