@@ -16,7 +16,7 @@ export const getAbCategory = createAsyncThunk(
   "blogCategory/get-blogCategory",
   async (id, thunkAPI) => {
     try {
-      return await bCategoryService.getbCategory(id);
+      return await bCategoryService.getBlogCategory(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -38,7 +38,7 @@ export const updateAbCategory= createAsyncThunk(
   "blogCategory/update-blogCategory",
   async (bCategory, thunkAPI) => {
     try {
-      return await bCategoryService.updatebCategory(bCategory);
+      return await bCategoryService.updateBlogCategory(bCategory);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -49,7 +49,7 @@ export const deleteAbCategory = createAsyncThunk(
   "blogCategory/delete-blogCategory",
   async (id, thunkAPI) => {
     try {
-      return await bCategoryService.deletebCategory(id);
+      return await bCategoryService.deleteBlogCategory(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
