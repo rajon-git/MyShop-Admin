@@ -10,7 +10,7 @@ import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { useNavigate } from "react-router-dom";
 import { createBlogs, resetState } from "../features/blogs/blogSlice";
-import { getCategories } from "../features/bCategory/bcategorySlice";
+import { getBCategories } from "../features/bCategory/bcategorySlice";
 
 let schema = yup.object().shape({
   title: yup.string().required("Title is Required"),
@@ -25,7 +25,7 @@ function AddBlog() {
 
   useEffect(() => {
   
-    dispatch(getCategories());
+    dispatch(getBCategories());
   }, [dispatch]);
 
   const imgState = useSelector((state) => state.upload.images);
