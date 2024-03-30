@@ -29,6 +29,17 @@ export const createBlogs = createAsyncThunk(
     }
   }
 );
+
+export const updateABlog = createAsyncThunk(
+  "blog/update-blog",
+  async (blog, thunkAPI) => {
+    try {
+      return await blogService.updateBlog(blog);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const resetState  = createAction("Reset_all");
 const initialState = {
   blogs: [],
@@ -84,6 +95,21 @@ export const blogSlice = createSlice({
         state.blogName = action.payload.title;
       })
       .addCase(getABlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateABlog.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateABlog.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedBlog = action.payload;
+      })
+      .addCase(updateABlog.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
