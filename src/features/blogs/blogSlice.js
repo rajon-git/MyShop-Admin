@@ -40,6 +40,17 @@ export const updateABlog = createAsyncThunk(
     }
   }
 );
+
+export const deleteABlog = createAsyncThunk(
+  "blog/delete-blog",
+  async (id, thunkAPI) => {
+    try {
+      return await blogService.deleteBlog(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const resetState  = createAction("Reset_all");
 const initialState = {
   blogs: [],
@@ -110,6 +121,21 @@ export const blogSlice = createSlice({
         state.updatedBlog = action.payload;
       })
       .addCase(updateABlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(deleteABlog.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteABlog.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedBlog = action.payload;
+      })
+      .addCase(deleteABlog.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
