@@ -107,7 +107,7 @@ export const bCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.blogCatName  = action.payload.name;
+        state.blogCatName  = action.payload.title;
       })
       .addCase(getAbCategory.rejected, (state, action) => {
         state.isLoading = false;
