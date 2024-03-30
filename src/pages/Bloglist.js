@@ -52,7 +52,7 @@ function Bloglist() {
       action: (
         <>
           <Link
-            to={`/admin/blog-list/${blogState[i]._id}`}
+            to={`/admin/blog/${blogState[i]._id}`}
             className=" fs-3 text-danger"
           >
             <BiEdit />
