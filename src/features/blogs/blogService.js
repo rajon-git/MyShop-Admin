@@ -11,9 +11,14 @@ const getBlogs = async () => {
   const response = await axios.get(`${base_url}blog/`);
   return response.data;
 };
+const getBlog = async (id) => {
+  const response = await axios.get(`${base_url}blog/${id}`, config);
+  return response.data;
+};
 const blogService = {
   getBlogs,
-  createBlog
+  createBlog,
+  getBlog
 };
 
 export default blogService;
