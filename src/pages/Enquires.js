@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { getEnquiries } from "../features/enquiry/enquirySlice";
+import { deleteAEnquiry, getEnquiries } from "../features/enquiry/enquirySlice";
 import { FaRegEye } from "react-icons/fa6";
 import CustomModal from "../components/CustomModal";
 
@@ -35,7 +35,6 @@ const columns = [
   },
 ];
 
-
 function Enquires() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -47,46 +46,46 @@ function Enquires() {
   const hideModal = () => {
     setOpen(false);
   };
-  useEffect(()=>{
-    dispatch(getEnquiries())
-  },[]);
-  const enquiryState = useSelector((state)=> state.enquiry.enquiries);
+  useEffect(() => {
+    dispatch(getEnquiries());
+  }, []);
+  const enquiryState = useSelector((state) => state.enquiry.enquiries);
   const data1 = [];
   for (let i = 0; i < enquiryState.length; i++) {
-  data1.push({
-    key: i+1,
-    name: enquiryState[i].name,
-    email: enquiryState[i].email,
-    mobile: enquiryState[i].mobile,
-    status: (
-      <>
-        <select name="" className="form-control form-select" id="">
-          <option value="">Set Status</option>
-        </select>
-      </>
-    ),
-    action: (
-      <>
-        <button
+    data1.push({
+      key: i + 1,
+      name: enquiryState[i].name,
+      email: enquiryState[i].email,
+      mobile: enquiryState[i].mobile,
+      status: (
+        <>
+          <select name="" className="form-control form-select" id="">
+            <option value="">Set Status</option>
+          </select>
+        </>
+      ),
+      action: (
+        <>
+          <Link className="ms-3 fs-3 text-danger" to="/">
+            <FaRegEye />
+          </Link>
+          <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
             onClick={() => showModal(enquiryState[i]._id)}
           >
             <AiFillDelete />
           </button>
-        <Link className="ms-3 fs-3 text-danger" to="/">
-          <FaRegEye />
-        </Link>
-      </>
-    ),
-  });
-}
-const deleteEnq = (e) => {
-  dispatch(deleteAColor(e));
-  setOpen(false);
-  setTimeout(() => {
-    dispatch(getEnquiries());
-  }, 500);
-};
+        </>
+      ),
+    });
+  }
+  const deleteEnq = (e) => {
+    dispatch(deleteAEnquiry(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getEnquiries());
+    }, 500);
+  };
   return (
     <div>
       <h3 className="mb-4">Enquires</h3>
