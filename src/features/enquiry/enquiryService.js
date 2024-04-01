@@ -17,10 +17,21 @@ const deleteEnquiry = async (id) => {
 
   return response.data;
 };
+
+const updateEnquiry = async (enquiry) => {
+  const response = await axios.put(
+    `${base_url}enquiry/${enquiry.id}`,
+    { status: enquiry.enquiryData },
+    config
+  );
+
+  return response.data;
+};
 const enquiryService = {
     getEnquiries,
     getEnquiry,
-    deleteEnquiry
+    deleteEnquiry,
+    updateEnquiry
 };
 
 export default enquiryService;

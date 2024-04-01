@@ -33,6 +33,17 @@ export const deleteAEnquiry = createAsyncThunk(
     }
   }
 );
+
+export const updateAEnquiry = createAsyncThunk(
+  "enquiry/update-enquiry",
+  async (enquiry, thunkAPI) => {
+    try {
+      return await enquiryService.updateEnquiry(enquiry);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const resetState  = createAction("Reset_all");
 const initialState = {
   enquiries: [],
@@ -92,6 +103,21 @@ export const enquirySlice = createSlice({
         state.deletedEnquiry = action.payload;
       })
       .addCase(deleteAEnquiry.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateAEnquiry.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAEnquiry.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedEnquiry = action.payload;
+      })
+      .addCase(updateAEnquiry.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
