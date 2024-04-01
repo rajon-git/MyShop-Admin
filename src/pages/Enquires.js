@@ -66,7 +66,7 @@ function Enquires() {
       ),
       action: (
         <>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <Link className="ms-3 fs-3 text-danger" to={`/admin/enquires/${enquiryState[i]._id}`}>
             <FaRegEye />
           </Link>
           <button

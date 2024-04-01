@@ -70,7 +70,11 @@ export const enquirySlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.enquiryName = action.payload.title;
+        state.enquiryName = action.payload.name;
+        state.enquiryMobile = action.payload.mobile;
+        state.enquiryEmail = action.payload.email;
+        state.enquiryComment = action.payload.comment;
+        state.enquiryStatus = action.payload.status;
       })
       .addCase(getAEnquiry.rejected, (state, action) => {
         state.isLoading = false;
