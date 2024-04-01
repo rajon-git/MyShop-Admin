@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { deleteAEnquiry, getEnquiries } from "../features/enquiry/enquirySlice";
+import { deleteAEnquiry, getEnquiries, updateAEnquiry } from "../features/enquiry/enquirySlice";
 import { FaRegEye } from "react-icons/fa6";
 import CustomModal from "../components/CustomModal";
 
@@ -59,14 +59,36 @@ function Enquires() {
       mobile: enquiryState[i].mobile,
       status: (
         <>
-          <select name="" className="form-control form-select" id="">
-            <option value="">Set Status</option>
+          <select
+            name=""
+            defaultValue={
+              enquiryState[i].status ? enquiryState[i].status : "Submitted"
+            }
+            className="form-control form-select"
+            id=""
+            onChange={(e)=>setEnquiryStatus(e.target.value, enquiryState[i]._id)}
+          >
+            <option value="Submitted" selected>
+              Submitted
+            </option>
+            <option value="Contacted" selected>
+              Contacted
+            </option>
+            <option value="In Progress" selected>
+              In Progress
+            </option>
+            <option value="Resolved" selected>
+              Resolved
+            </option>
           </select>
         </>
       ),
       action: (
         <>
-          <Link className="ms-3 fs-3 text-danger" to={`/admin/enquires/${enquiryState[i]._id}`}>
+          <Link
+            className="ms-3 fs-3 text-danger"
+            to={`/admin/enquires/${enquiryState[i]._id}`}
+          >
             <FaRegEye />
           </Link>
           <button
@@ -78,6 +100,12 @@ function Enquires() {
         </>
       ),
     });
+  }
+
+  const setEnquiryStatus =(e,i)=>
+  {
+    const data = {id:i, enquiryData:e};
+    dispatch(updateAEnquiry(data));
   }
   const deleteEnq = (e) => {
     dispatch(deleteAEnquiry(e));
