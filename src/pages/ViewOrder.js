@@ -48,7 +48,7 @@ for (let i = 0; i < orderState.length; i++) {
     // product: orderState[i].products.map((i,j)=>{
     //   return i.product.title
     // }),
-    product: <Link to={`/admin/order/${orderState[i].orderby._id}`}>View Orders</Link>,
+    product: <Link to={`/admin/order/${orderState[i].orderby._id}`}>View User Orders</Link>,
     amount: orderState[i].paymentIntent.amount,
     date: new Date(orderState[i].createdAt).toLocaleString(),
     action: (
@@ -65,7 +65,7 @@ for (let i = 0; i < orderState.length; i++) {
 }
   return (
     <div>
-      <h3 className="mb-4">Orders</h3>
+      <h3 className="mb-4">View Order</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
