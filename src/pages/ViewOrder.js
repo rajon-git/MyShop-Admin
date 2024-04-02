@@ -3,8 +3,8 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../features/auth/authSlice";
-import { Link } from "react-router-dom";
+import { getOrderByUser, getOrders } from "../features/auth/authSlice";
+import { Link, useLocation } from "react-router-dom";
 
 const columns = [
   {
@@ -12,12 +12,20 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Customer",
+    title: "Product Name",
     dataIndex: "name",
   },
   {
-    title: "Product",
-    dataIndex: "product",
+    title: "Brand",
+    dataIndex: "brand",
+  },
+  {
+    title: "Count",
+    dataIndex: "count",
+  },
+  {
+    title: "Color",
+    dataIndex: "color",
   },
   {
     title: "Amount",
@@ -35,22 +43,26 @@ const columns = [
 
 
 function ViewOrder() {
+  const location = useLocation();
   const dispatch = useDispatch();
+  const userId = location.pathname.split("/")[3]
   useEffect(()=>{
-    dispatch(getOrders())
-  },[dispatch]);
-  const orderState = useSelector((state)=> state.auth.orders);
+    dispatch(getOrderByUser(userId))
+  },[userId]);
+  const orderState = useSelector((state)=> state.auth.orderbyuser.products);
   const data1 = [];
 for (let i = 0; i < orderState.length; i++) {
   data1.push({
     key: i,
-    name: orderState[i].orderby.firstName,
+    name: orderState[i].product.title,
+    brand: orderState[i].product.brand,
     // product: orderState[i].products.map((i,j)=>{
     //   return i.product.title
     // }),
-    product: <Link to={`/admin/order/${orderState[i].orderby._id}`}>View User Orders</Link>,
-    amount: orderState[i].paymentIntent.amount,
-    date: new Date(orderState[i].createdAt).toLocaleString(),
+    count: orderState[i].product.count,
+    Color: orderState[i].product.color,
+    amount: orderState[i].product.price,
+    date: orderState[i].product.createdAt,
     action: (
       <>
         <Link to="/" className=" fs-3 text-danger">
