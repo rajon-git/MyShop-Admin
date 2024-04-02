@@ -34,7 +34,7 @@ const columns = [
 ];
 
 
-function Orders() {
+function ViewOrder() {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getOrders())
@@ -73,4 +73,4 @@ for (let i = 0; i < orderState.length; i++) {
   );
 }
 
-export default Orders;
+export default ViewOrder;
