@@ -13,6 +13,13 @@ const columns = [
     dataIndex: "key",
   },
   {
+    title: "Image",
+    dataIndex: "images",
+    render: (images) => (
+      <img src={images[0]?.url} alt="Blog" style={{ width: 50, height: 50 }} />
+    ),
+  },
+  {
     title: "Title",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
@@ -47,8 +54,9 @@ function Bloglist() {
   for (let i = 0; i < blogState.length; i++) {
     data1.push({
       key: i + 1,
-      name: blogState[i].title,
-      category: blogState[i].category,
+      images: blogState[i]?.images,
+      name: blogState[i]?.title,
+      category: blogState[i]?.category,
       action: (
         <>
           <Link

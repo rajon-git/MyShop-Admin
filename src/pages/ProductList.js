@@ -14,7 +14,7 @@ const columns = [
     title: "Image",
     dataIndex: "images",
     render: (images) => (
-      <img src={images[0]} alt="Product" style={{ width: 50, height: 50 }} />
+      <img src={images[0]?.url} alt="Product" style={{ width: 50, height: 50 }} />
     ),
   },
   {
@@ -57,12 +57,12 @@ const Productlist = () => {
   for (let i = 0; i < productState.length; i++) {
     data1.push({
       key: i + 1,
-      images: productState[i].images,
-      title: productState[i].title,
-      brand: productState[i].brand,
-      category: productState[i].category,
-      color: productState[i].color,
-      price: `${productState[i].price}`,
+      images: productState[i]?.images,
+      title: productState[i]?.title,
+      brand: productState[i]?.brand,
+      category: productState[i]?.category,
+      color: productState[i]?.color,
+      price: `${productState[i]?.price}`,
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
