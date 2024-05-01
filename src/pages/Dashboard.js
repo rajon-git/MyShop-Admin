@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiArrowDownRight } from "react-icons/fi";
 import { Table } from "antd";
 import { Column } from "@ant-design/plots";
+import { useDispatch, useSelector } from "react-redux";
+import { getMonthlyData } from "../features/auth/authSlice";
 const columns = [
   {
     title: "No.",
@@ -31,67 +33,41 @@ for (let i = 0; i < 46; i++) {
 }
 
 function Dashboard() {
-  const data = [
-    {
-      type: "Jan",
-      sales: 5,
-    },
-    {
-      type: "Feb",
-      sales: 55,
-    },
-    {
-      type: "Mar",
-      sales: 25,
-    },
-    {
-      type: "Apr",
-      sales: 45,
-    },
-    {
-      type: "May",
-      sales: 45,
-    },
-    {
-      type: "Jun",
-      sales: 45,
-    },
-    {
-      type: "July",
-      sales: 35,
-    },
-    {
-      type: "Aug",
-      sales: 15,
-    },
-    {
-      type: "Sep",
-      sales: 3,
-    },
-    {
-      type: "Oct",
-      sales: 3,
-    },
-    {
-      type: "Nov",
-      sales: 3,
-    },
-    {
-      type: "Dec",
-      sales: 3,
-    },
-  ];
+  const [monthlyData,setMonthlyData] = useState([])
+  const [monthlyDataSales,setMonthlyDataSales] = useState([])
+  const dispatch = useDispatch();
+  const monthlyDataState = useSelector((state)=>state?.auth?.monthlyData);
+
+  useEffect(()=>{
+    dispatch(getMonthlyData());
+  },[])
+
+  useEffect(()=>{
+    let monthNames= ["January","February","March","April","May","June","July",
+            "August","September","October","November","December"];
+    let data =[]
+    let monthlyOrderCount = []
+    for (let index = 0; index < monthlyDataState?.length; index++) {
+      const element = monthlyDataState[index];
+
+      data.push({type:monthNames[element?._id?.month],income:element?.amount});
+      monthlyOrderCount.push({type:monthNames[element?._id?.month],sales:element?.count})
+      
+    }
+    setMonthlyData(data);
+    setMonthlyDataSales(monthlyOrderCount);
+  },[])
   const config = {
-    data,
+    data:monthlyData,
     xField: "type",
-    yField: "sales",
+    yField: "income",
     label: {
       position: "top", // Position labels above bars
       style: {
         fill: "#FFFFFF",
-        opacity: 0.6,
+        opacity: 1,
       },
-      formatter: (sales) => `${sales}`, // Format label content as desired
+     
     },
     xAxis: {
       label: {
@@ -105,6 +81,33 @@ function Dashboard() {
       },
       sales: {
         alias: "Income",
+      },
+    },
+  };
+
+  const config2 = {
+    data:monthlyDataSales,
+    xField: "type",
+    yField: "sales",
+    label: {
+      position: "top", // Position labels above bars
+      style: {
+        fill: "#FFFFFF",
+        opacity: 1,
+      },
+    },
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+    },
+    meta: {
+      type: {
+        alias: "Month",
+      },
+      sales: {
+        alias: "Sales",
       },
     },
   };
@@ -152,11 +155,20 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="mt-4">
+      <div className="d-flex justify-content-between gap-3">
+      <div className="mt-4 flex-grow-1 w-50">
         <h3 className="mb-4">Income Statics</h3>
         <div>
           <Column {...config} />
         </div>
+      </div>
+
+      <div className="mt-4 flex-grow-1 w-50">
+        <h3 className="mb-4">Sales Statics</h3>
+        <div>
+          <Column {...config2} />
+        </div>
+      </div>
       </div>
 
       <div className="mt-4">

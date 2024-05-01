@@ -36,7 +36,6 @@ const getOrder = async(id)=>{
 const getMonthlyOrder = async()=>{
   const response = await axios.get(
       `${base_url}user/getMonthWiseOrderIncome`,
-      "",
       config
   )
   return response.data
