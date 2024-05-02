@@ -48,6 +48,14 @@ const getYearlyOrders = async()=>{
   return response.data
 }
 
+const updateOrder = async(id)=>{
+  const response = await axios.put(
+      `${base_url}user/updateorder/${id}`,
+      config
+  )
+  return response.data
+}
+
 const authService = {
   login,
   getOrders,
