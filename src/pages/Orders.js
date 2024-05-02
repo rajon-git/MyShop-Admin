@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../features/auth/authSlice";
+import { getOrders, updateAOrder } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -49,7 +49,7 @@ for (let i = 0; i < orderState.length; i++) {
     date: new Date(orderState[i].createdAt).toLocaleString(),
     action: (
       <>
-        <select name="" className="form-control form-select" id="">
+        <select name="" defaultValue={orderState[i]?.orderStatus} onChange={(e)=>updateOrderStatus(orderState[i]?._id,e.target.value)} className="form-control form-select" id="">
           <option value="ordered" disabled selected>Ordered</option>
           <option value="accept">Accept</option>
           <option value="cancel">Cancel</option>
@@ -61,6 +61,10 @@ for (let i = 0; i < orderState.length; i++) {
       </>
     ),
   });
+}
+
+const updateOrderStatus = (a,b)=>{
+  dispatch(updateAOrder({id:a,status:b}))
 }
   return (
     <div>

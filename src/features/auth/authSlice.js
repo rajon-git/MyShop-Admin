@@ -50,9 +50,9 @@ export const getAOrder = createAsyncThunk(
 
 export const updateAOrder = createAsyncThunk(
   "order/update",
-  async (id,data,thunkAPI) => {
+  async (data,thunkAPI) => {
     try {
-      return await authService.updateOrder(id,data);
+      return await authService.updateOrder(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

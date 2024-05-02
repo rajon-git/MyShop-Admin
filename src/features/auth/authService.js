@@ -48,9 +48,9 @@ const getYearlyOrders = async()=>{
   return response.data
 }
 
-const updateOrder = async(id,data)=>{
+const updateOrder = async(data)=>{
   const response = await axios.put(
-      `${base_url}user/updateorder/${id}`,data,
+      `${base_url}user/updateorder/${data.id}`,{status:data.status},
       config
   )
   return response.data
