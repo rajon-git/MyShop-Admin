@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CustomInput from "../components/CustomInput";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../features/auth/authSlice";
 
 let schema = yup.object().shape({
@@ -23,20 +23,13 @@ const Login = () => {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      dispatch(login(values));
+      dispatch(login(values)).then(() => {
+        navigate("/admin");
+      });
     },
   });
-  const authState = useSelector((state) => state);
-
-  const { user, isError, isSuccess, isLoading, message } = authState.auth;
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("admin");
-    } else {
-      navigate("");
-    }
-  }, [user, isError, isSuccess, isLoading, navigate]);
+  
+  
   return (
     <div className="py-5" style={{ background: "#001529", minHeight: "100vh" }}>
       <br />
@@ -47,9 +40,6 @@ const Login = () => {
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
         <h3 className="text-center title">Login</h3>
         <p className="text-center">Login to your account to continue.</p>
-        <div className="error text-center">
-          {message.message === "Rejected" ? "You are not an Admin" : ""}
-        </div>
 
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput

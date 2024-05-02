@@ -21,6 +21,12 @@ const MainLayout = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const navigate = useNavigate();
+
+  const handleSignout = (e) => {
+    e.stopPropagation();
+    localStorage.clear();  
+    navigate('/');
+  };
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -213,13 +219,13 @@ const MainLayout = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
+                  <button
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
+                    onClick={(e) => handleSignout(e)}
                   >
                     Signout
-                  </Link>
+                  </button>
                 </li>
               </div>
             </div>

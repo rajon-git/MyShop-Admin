@@ -98,7 +98,7 @@ export const authSlice = createSlice({
         state.message = "success";
         if (state.isSuccess === true) {
           localStorage.setItem("user", JSON.stringify(action.payload));
-          toast.info("User logged in");
+          toast("User logged in");
         }
       })
       .addCase(login.rejected, (state, action) => {
@@ -106,6 +106,9 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         state.isLoading = false;
+        if (state.isSuccess === false) {
+          toast("You are not admin");
+        }
       })
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;
