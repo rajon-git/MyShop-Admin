@@ -33,7 +33,6 @@ const columns = [
   },
 ];
 
-
 function Orders() {
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -45,20 +44,20 @@ for (let i = 0; i < orderState.length; i++) {
   data1.push({
     key: i+1,
     name: orderState[i]?.user?.firstName+" "+orderState[i]?.user?.lastName,
-    // product: orderState[i].products.map((i,j)=>{
-    //   return i.product.title
-    // }),
     product: <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>,
     amount: orderState[i]?.totalPrice,
     date: new Date(orderState[i].createdAt).toLocaleString(),
     action: (
       <>
-        <Link to="/" className=" fs-3 text-danger">
-          <BiEdit />
-        </Link>
-        <Link className="ms-3 fs-3 text-danger" to="/">
-          <AiFillDelete />
-        </Link>
+        <select name="" className="form-control form-select" id="">
+          <option value="ordered" disabled selected>Ordered</option>
+          <option value="accept">Accept</option>
+          <option value="cancel">Cancel</option>
+          <option value="processed">Processed</option>
+          <option value="shipped">Shipped</option>
+          <option value="out for delivery">Out for Delivery</option>
+          <option value="delivered">Delivered</option>
+        </select>
       </>
     ),
   });
