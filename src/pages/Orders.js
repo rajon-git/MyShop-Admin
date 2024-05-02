@@ -28,8 +28,8 @@ const columns = [
     dataIndex: "date",
   },
   {
-    title: "Status",
-    dataIndex: "status",
+    title: "Action",
+    dataIndex: "action",
   },
 ];
 
@@ -39,17 +39,17 @@ function Orders() {
   useEffect(()=>{
     dispatch(getOrders())
   },[dispatch]);
-  const orderState = useSelector((state)=> state.auth.orders);
+  const orderState = useSelector((state)=> state?.auth?.orders);
   const data1 = [];
 for (let i = 0; i < orderState.length; i++) {
   data1.push({
-    key: i,
-    name: orderState[i].orderby.firstName,
+    key: i+1,
+    name: orderState[i]?.user?.firstName+" "+orderState[i]?.user?.lastName,
     // product: orderState[i].products.map((i,j)=>{
     //   return i.product.title
     // }),
-    product: <Link to={`/admin/order/${orderState[i].orderby._id}`}>View Orders</Link>,
-    amount: orderState[i].paymentIntent.amount,
+    product: <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>,
+    amount: orderState[i]?.totalPrice,
     date: new Date(orderState[i].createdAt).toLocaleString(),
     action: (
       <>
