@@ -3,7 +3,7 @@ import { FiArrowDownRight } from "react-icons/fi";
 import { Table } from "antd";
 import { Column } from "@ant-design/plots";
 import { useDispatch, useSelector } from "react-redux";
-import { getMonthlyData, getYearlyData } from "../features/auth/authSlice";
+import { getMonthlyData, getOrders, getYearlyData } from "../features/auth/authSlice";
 const columns = [
   {
     title: "No.",
@@ -14,34 +14,37 @@ const columns = [
     dataIndex: "name",
   },
   {
-    title: "Product",
+    title: "Product Count",
     dataIndex: "product",
+  },
+  {
+    title: "Total Price",
+    dataIndex: "price",
+  },
+  {
+    title: "Total Price After Discount",
+    dataIndex: "dprice",
   },
   {
     title: "Status",
     dataIndex: "status",
   },
 ];
-const data1 = [];
-for (let i = 0; i < 46; i++) {
-  data1.push({
-    key: i,
-    name: `Edward King ${i}`,
-    product: 32,
-    status: `London, Park Lane no. ${i}`,
-  });
-}
+
 
 function Dashboard() {
   const [monthlyData,setMonthlyData] = useState([])
   const [monthlyDataSales,setMonthlyDataSales] = useState([])
+  const [orderData,setOrderData]= useState([])
   const dispatch = useDispatch();
   const monthlyDataState = useSelector((state)=>state?.auth?.monthlyData);
   const yearlyDataState = useSelector((state)=>state?.auth?.yearlyData);
+  const ordersState = useSelector((state)=>state?.auth?.orders);
 
   useEffect(()=>{
     dispatch(getMonthlyData());
     dispatch(getYearlyData());
+    dispatch(getOrders());
   },[])
 
   useEffect(()=>{
@@ -58,6 +61,19 @@ function Dashboard() {
     }
     setMonthlyData(data);
     setMonthlyDataSales(monthlyOrderCount);
+
+    const data1 = [];
+for (let i = 0; i < ordersState?.length; i++) {
+  data1.push({
+    key: i+1,
+    name: ordersState[i]?.user?.firstName+" "+ordersState[i]?.user?.lastName,
+    product: ordersState[i]?.orderItems?.length,
+    price:ordersState[i]?.totalPrice,
+    dprice:ordersState[i]?.totalPriceAfterDiscount,
+    status: ordersState[i]?.orderStatus,
+  });
+  setOrderData(data1);
+}
   },[])
   const config = {
     data:monthlyData,
@@ -121,7 +137,7 @@ function Dashboard() {
         <div className="d-flex p-3 justify-content-between align-items-end flex-grow-1  bg-white p-3 rounded-3">
           <div>
             <p className="">Total Income</p>
-            <h4 className="mb-0">$ {yearlyDataState[0]?.amount}</h4>
+            <h4 className="mb-0"> {yearlyDataState && yearlyDataState[0]?.amount}</h4>
           </div>
           <div className="d-flex flex-column  align-items-end ">
             <h6 className="red">
@@ -134,7 +150,7 @@ function Dashboard() {
         <div className="d-flex p-3 justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
           <div>
             <p className="">Total Sales</p>
-            <h4 className="mb-0">{yearlyDataState[0]?.count}</h4>
+            <h4 className="mb-0">{yearlyDataState && yearlyDataState[0]?.count}</h4>
           </div>
           <div className="d-flex flex-column  align-items-end ">
             <h6 className="green">
@@ -164,7 +180,7 @@ function Dashboard() {
       <div className="mt-4">
         <h3 className="mb-4">Recent Orders</h3>
         <div>
-          <Table columns={columns} dataSource={data1} />
+          <Table columns={columns} dataSource={orderData} />
         </div>
       </div>
     </>
