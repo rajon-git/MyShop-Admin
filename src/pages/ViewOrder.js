@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderByUser, getOrders } from "../features/auth/authSlice";
+import { getAOrder, getOrders } from "../features/auth/authSlice";
 import { Link, useLocation } from "react-router-dom";
 
 const columns = [
@@ -32,10 +32,6 @@ const columns = [
     dataIndex: "amount",
   },
   {
-    title: "Date",
-    dataIndex: "date",
-  },
-  {
     title: "Status",
     dataIndex: "status",
   },
@@ -45,24 +41,20 @@ const columns = [
 function ViewOrder() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const userId = location.pathname.split("/")[3]
+  const orderId = location.pathname.split("/")[3]
   useEffect(()=>{
-    dispatch(getOrderByUser(userId))
-  },[userId]);
-  const orderState = useSelector((state)=> state.auth.orderbyuser.products);
+    dispatch(getAOrder(orderId))
+  },[orderId]);
+  const orderState = useSelector((state)=> state?.auth?.singleOrder?.orders);
   const data1 = [];
-for (let i = 0; i < orderState.length; i++) {
+for (let i = 0; i < orderState?.orderItems?.length; i++) {
   data1.push({
-    key: i,
-    name: orderState[i].product.title,
-    brand: orderState[i].product.brand,
-    // product: orderState[i].products.map((i,j)=>{
-    //   return i.product.title
-    // }),
-    count: orderState[i].product.count,
-    Color: orderState[i].product.color,
-    amount: orderState[i].product.price,
-    date: orderState[i].product.createdAt,
+    key: i+1,
+    name: orderState?.orderItems[i]?.product?.title,
+    brand: orderState?.orderItems[i]?.product?.brand,
+    count: orderState?.orderItems[i]?.quantity,
+    color: orderState?.orderItems[i]?.color?.title,
+    amount: orderState?.orderItems[i]?.product?.price,
     action: (
       <>
         <Link to="/" className=" fs-3 text-danger">
