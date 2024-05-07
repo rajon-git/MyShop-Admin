@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { Table } from "antd";
-import { BiEdit } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
+import { Table, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders, updateAOrder } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
+
 
 const columns = [
   {
@@ -35,21 +34,32 @@ const columns = [
 
 function Orders() {
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(getOrders())
-  },[dispatch]);
-  const orderState = useSelector((state)=> state?.auth?.orders);
-  const data1 = [];
-for (let i = 0; i < orderState.length; i++) {
-  data1.push({
-    key: i+1,
-    name: orderState[i]?.user?.firstName+" "+orderState[i]?.user?.lastName,
-    product: <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>,
-    amount: orderState[i]?.totalPrice,
-    date: new Date(orderState[i].createdAt).toLocaleString(),
-    action: (
-      <>
-        <select name="" defaultValue={orderState[i]?.orderStatus} onChange={(e)=>updateOrderStatus(orderState[i]?._id,e.target.value)} className="form-control form-select" id="">
+  useEffect(() => {
+    dispatch(getOrders());
+  }, [dispatch]);
+
+  const orderState = useSelector((state) => state?.auth?.orders);
+  const data = [];
+
+  const updateOrderStatus = (id, status) => {
+    dispatch(updateAOrder({ id, status }));
+  };
+
+
+  for (let i = 0; i < orderState.length; i++) {
+    data.push({
+      key: i + 1,
+      name: orderState[i]?.user?.firstName + " " + orderState[i]?.user?.lastName,
+      product: <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>,
+      amount: orderState[i]?.totalPriceAfterDiscount + 100, // Adjusted as per your requirement
+      date: new Date(orderState[i].createdAt).toLocaleString(),
+      action: (
+        <select
+          name=""
+          defaultValue={orderState[i]?.orderStatus}
+          onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)}
+          className="form-control form-select"
+        >
           <option value="ordered" disabled selected>Ordered</option>
           <option value="accept">Accept</option>
           <option value="cancel">Cancel</option>
@@ -58,19 +68,15 @@ for (let i = 0; i < orderState.length; i++) {
           <option value="out for delivery">Out for Delivery</option>
           <option value="delivered">Delivered</option>
         </select>
-      </>
-    ),
-  });
-}
+      ),
+    });
+  }
 
-const updateOrderStatus = (a,b)=>{
-  dispatch(updateAOrder({id:a,status:b}))
-}
   return (
     <div>
       <h3 className="mb-4">Orders</h3>
       <div>
-        <Table columns={columns} dataSource={data1} />
+        <Table columns={columns} dataSource={data} />
       </div>
     </div>
   );

@@ -45,6 +45,7 @@ function ViewOrder() {
   useEffect(()=>{
     dispatch(getAOrder(orderId))
   },[orderId]);
+  
   const orderState = useSelector((state)=> state?.auth?.singleOrder?.orders);
   const data1 = [];
 for (let i = 0; i < orderState?.orderItems?.length; i++) {
