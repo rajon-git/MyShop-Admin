@@ -41,6 +41,7 @@ function CategoryList() {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
+  
   const pCatState = useSelector((state) => state.pCategory.pCategories);
   const data1 = [];
   for (let i = 0; i < pCatState.length; i++) {
