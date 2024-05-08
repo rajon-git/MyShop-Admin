@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/product/productSlice";
+import { deleteAProduct, getProducts } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 
@@ -94,6 +94,14 @@ const Productlist = () => {
     ),
   }));
 
+  const deleteProduct = (e) => {
+    dispatch(deleteAProduct(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getProducts());
+    }, 500);
+  };
+
   return (
     <div>
       <h3 className="mb-4 title">Products</h3>
@@ -110,7 +118,7 @@ const Productlist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => {
-          // deleteBrand(brandId);
+          deleteProduct(productId);
           
         }}
         title="Are you sure, want to delete this brand?"
