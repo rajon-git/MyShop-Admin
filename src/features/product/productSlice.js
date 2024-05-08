@@ -145,7 +145,15 @@ export const productSlice = createSlice({
             state.isLoading = false;
             state.isError = false;
             state.isSuccess = true;
-            state.singleProduct = action.payload;
+            state.productName = action.payload.title;
+            state.productBrand = action.payload.brand;
+            state.productPrice = action.payload.price;
+            state.productDesc = action.payload.description;
+            state.productCat = action.payload.category;
+            state.productQty = action.payload.quantity;
+            state.productColor = action.payload.color;
+            state.productTags = action.payload.tags;
+            state.productImg = action.payload.images;
           })
           .addCase(getAProduct.rejected, (state, action) => {
             state.isLoading = false;

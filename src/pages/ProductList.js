@@ -61,6 +61,7 @@ const Productlist = () => {
     setOpen(true);
     setProductId(e);
   };
+  console.log(productId)
   const hideModal = () => {
     setOpen(false);
   };
@@ -84,12 +85,11 @@ const Productlist = () => {
           <BiEdit />
         </Link>
         <button
-            className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(product._id)}
-          >
-            <AiFillDelete />
-          </button>
-        
+          className="ms-3 fs-3 text-danger bg-transparent border-0"
+          onClick={() => showModal(product._id)}
+        >
+          <AiFillDelete />
+        </button>
       </>
     ),
   }));
@@ -104,7 +104,7 @@ const Productlist = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">Products</h3>
+      <h3 className="mb-4 title">Product List</h3>
       <div>
         <Table
           columns={columns}
@@ -119,7 +119,6 @@ const Productlist = () => {
         open={open}
         performAction={() => {
           deleteProduct(productId);
-          
         }}
         title="Are you sure, want to delete this brand?"
       />

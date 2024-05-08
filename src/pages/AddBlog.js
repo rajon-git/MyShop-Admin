@@ -24,6 +24,7 @@ function AddBlog() {
   const location = useLocation();
   const [images, setImages] = useState([]);
   const getBlogId = location.pathname.split("/")[3];
+  
   useEffect(() => {
     if (getBlogId !== undefined) {
       dispatch(getABlog(getBlogId));
