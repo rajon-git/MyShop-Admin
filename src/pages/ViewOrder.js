@@ -72,7 +72,7 @@ for (let i = 0; i < orderState?.orderItems?.length; i++) {
     <div>
       <h3 className="mb-4">View Order</h3>
       <div>
-        <Table columns={columns} dataSource={data1} />
+        <Table columns={columns} scroll={{ x: true }} dataSource={data1} />
       </div>
     </div>
   );

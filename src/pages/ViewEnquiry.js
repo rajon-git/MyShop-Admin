@@ -33,7 +33,9 @@ function ViewEnquiry() {
     },300);
   }
   return (
-    <div>
+    <div className="container" style={{ overflowX: "auto" }}>
+  <div className="row">
+    <div className="col-12">
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="mb-4">View Enquiry</h3>
         <button
@@ -43,54 +45,45 @@ function ViewEnquiry() {
           <IoMdArrowBack className="fs-5" /> Go Back
         </button>
       </div>
-      <div className="mt-5 bg-white p-4 d-flex gap-3 flex-column rounded-3">
-        <div className="d-flex align-items-center gap-3">
-          <h5 className="mb-0">Name: </h5>
-          <p className="mb-0">{enquiryName}</p>
+      <div className="mt-5 bg-white p-4 rounded-3">
+        <div className="mb-3">
+          <h5>Name:</h5>
+          <p>{enquiryName}</p>
         </div>
-        <div className="d-flex align-items-center gap-3">
-          <h5 className="mb-0">Mobile: </h5>
-          <a href="tel:+88{enquiryMobile}">{enquiryMobile}</a>
+        <div className="mb-3">
+          <h5>Mobile:</h5>
+          <a href={`tel:+88${enquiryMobile}`}>{enquiryMobile}</a>
         </div>
-        <div className="d-flex align-items-center gap-3">
-          <h5 className="mb-0">Email: </h5>
-          <a href="mailto:{enquiryEmail}">{enquiryEmail}</a>
+        <div className="mb-3">
+          <h5>Email:</h5>
+          <a href={`mailto:${enquiryEmail}`}>{enquiryEmail}</a>
         </div>
-        <div className="d-flex align-items-center gap-3">
-          <h5 className="mb-0">Comment: </h5>
-          <p className="mb-0">{enquiryComment}</p>
+        <div className="mb-3">
+          <h5>Comment:</h5>
+          <p>{enquiryComment}</p>
         </div>
-        <div className="d-flex align-items-center gap-3">
-          <h5 className="mb-0">Status: </h5>
-          <p className="mb-0">{enquiryStatus}</p>
+        <div className="mb-3">
+          <h5>Status:</h5>
+          <p>{enquiryStatus}</p>
         </div>
-        <div className="d-flex align-items-center gap-3">
-          <h5 className="mb-0">Change Status: </h5>
-          <div>
-            <select
-              name=""
-              defaultValue={enquiryStatus ? enquiryStatus : "Submitted"}
-              className="form-control form-select"
-              id=""
-              onChange={(e)=>setEnquiryStatus(e.target.value, getEnqId)}
-            >
-              <option value="Submitted" selected>
-                Submitted
-              </option>
-              <option value="Contacted" selected>
-                Contacted
-              </option>
-              <option value="In Progress" selected>
-                In Progress
-              </option>
-              <option value="Resolved" selected>
-                Resolved
-              </option>
-            </select>
-          </div>
+        <div className="mb-3">
+          <h5>Change Status:</h5>
+          <select
+            defaultValue={enquiryStatus ? enquiryStatus : "Submitted"}
+            className="form-control"
+            onChange={(e) => setEnquiryStatus(e.target.value, getEnqId)}
+          >
+            <option value="Submitted">Submitted</option>
+            <option value="Contacted">Contacted</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
   );
 }
 

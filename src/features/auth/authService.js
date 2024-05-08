@@ -27,7 +27,15 @@ const getOrders = async () => {
 const getOrder = async(id)=>{
     const response = await axios.get(
         `${base_url}user/getaOrder/${id}`,
-        config
+        {
+          headers: {
+              Authorization: `Bearer ${
+                  localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")).token
+                  : ""
+              }`,
+              Accept: "application/json",
+          }
+      }
     )
     return response.data
 }
@@ -35,7 +43,15 @@ const getOrder = async(id)=>{
 const getMonthlyOrder = async()=>{
   const response = await axios.get(
       `${base_url}user/getMonthWiseOrderIncome`,
-      config
+      {
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    }
   )
   return response.data
 }
@@ -43,7 +59,15 @@ const getMonthlyOrder = async()=>{
 const getYearlyOrders = async()=>{
   const response = await axios.get(
       `${base_url}user/getYearlyTotalIncome`,
-      config
+      {
+        headers: {
+            Authorization: `Bearer ${
+                localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")).token
+                : ""
+            }`,
+            Accept: "application/json",
+        }
+    }
   )
   return response.data
 }

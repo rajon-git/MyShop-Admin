@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { Table, Button } from "antd";
+import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders, updateAOrder } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
-
-
 const columns = [
   {
     title: "No.",
@@ -73,10 +71,14 @@ function Orders() {
   }
 
   return (
-    <div>
-      <h3 className="mb-4">Orders</h3>
-      <div>
-        <Table columns={columns} dataSource={data} />
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <h3 className="mb-4">Orders</h3>
+          <div className="table-responsive">
+            <Table columns={columns} scroll={{ x: true }} dataSource={data} />
+          </div>
+        </div>
       </div>
     </div>
   );
