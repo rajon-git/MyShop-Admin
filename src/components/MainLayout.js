@@ -24,8 +24,8 @@ const MainLayout = () => {
 
   const handleSignout = (e) => {
     e.stopPropagation();
-    localStorage.clear();  
-    navigate('/');
+    localStorage.clear();
+    navigate("/");
   };
   return (
     <Layout>
@@ -37,7 +37,6 @@ const MainLayout = () => {
           </h2>
         </div>
         <Menu
-        
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[""]}
@@ -170,7 +169,8 @@ const MainLayout = () => {
             background: colorBgContainer,
           }}
         >
-          <Button className="button"
+          <Button
+            className="button"
             type="text"
             icon={collapsed ? <AiOutlinePicRight /> : <AiOutlinePicLeft />}
             onClick={() => setCollapsed(!collapsed)}
@@ -260,8 +260,6 @@ const MainLayout = () => {
   );
 };
 export default MainLayout;
-
-
 
 // import React, { useState } from "react";
 // import { ToastContainer } from "react-toastify";

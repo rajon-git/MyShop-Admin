@@ -24,61 +24,56 @@ const getOrders = async () => {
   return response.data;
 };
 
-const getOrder = async(id)=>{
-    const response = await axios.get(
-        `${base_url}user/getaOrder/${id}`,
-        {
-          headers: {
-              Authorization: `Bearer ${
-                  localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")).token
-                  : ""
-              }`,
-              Accept: "application/json",
-          }
-      }
-    )
-    return response.data
-}
+const getOrder = async (id) => {
+  const response = await axios.get(`${base_url}user/getaOrder/${id}`, {
+    headers: {
+      Authorization: `Bearer ${
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user")).token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  });
+  return response.data;
+};
 
-const getMonthlyOrder = async()=>{
-  const response = await axios.get(
-      `${base_url}user/getMonthWiseOrderIncome`,
-      {
-        headers: {
-            Authorization: `Bearer ${
-                localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")).token
-                : ""
-            }`,
-            Accept: "application/json",
-        }
-    }
-  )
-  return response.data
-}
+const getMonthlyOrder = async () => {
+  const response = await axios.get(`${base_url}user/getMonthWiseOrderIncome`, {
+    headers: {
+      Authorization: `Bearer ${
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user")).token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  });
+  return response.data;
+};
 
-const getYearlyOrders = async()=>{
-  const response = await axios.get(
-      `${base_url}user/getYearlyTotalIncome`,
-      {
-        headers: {
-            Authorization: `Bearer ${
-                localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")).token
-                : ""
-            }`,
-            Accept: "application/json",
-        }
-    }
-  )
-  return response.data
-}
+const getYearlyOrders = async () => {
+  const response = await axios.get(`${base_url}user/getYearlyTotalIncome`, {
+    headers: {
+      Authorization: `Bearer ${
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user")).token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  });
+  return response.data;
+};
 
-const updateOrder = async(data)=>{
+const updateOrder = async (data) => {
   const response = await axios.put(
-      `${base_url}user/updateorder/${data.id}`,{status:data.status},
-      config
-  )
-  return response.data
-}
+    `${base_url}user/updateorder/${data.id}`,
+    { status: data.status },
+    config
+  );
+  return response.data;
+};
 
 const authService = {
   login,
@@ -86,7 +81,7 @@ const authService = {
   getOrder,
   getMonthlyOrder,
   getYearlyOrders,
-  updateOrder
+  updateOrder,
 };
 
 export default authService;

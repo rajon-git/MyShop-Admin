@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteABrand, getBrands } from "../features/brand/brandSlice";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 
 const columns = [

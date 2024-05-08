@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { deleteAEnquiry, getEnquiries, updateAEnquiry } from "../features/enquiry/enquirySlice";
+import {
+  deleteAEnquiry,
+  getEnquiries,
+  updateAEnquiry,
+} from "../features/enquiry/enquirySlice";
 import { FaRegEye } from "react-icons/fa6";
 import CustomModal from "../components/CustomModal";
 
@@ -66,7 +70,9 @@ function Enquires() {
             }
             className="form-control form-select"
             id=""
-            onChange={(e)=>setEnquiryStatus(e.target.value, enquiryState[i]._id)}
+            onChange={(e) =>
+              setEnquiryStatus(e.target.value, enquiryState[i]._id)
+            }
           >
             <option value="Submitted" selected>
               Submitted
@@ -102,11 +108,10 @@ function Enquires() {
     });
   }
 
-  const setEnquiryStatus =(e,i)=>
-  {
-    const data = {id:i, enquiryData:e};
+  const setEnquiryStatus = (e, i) => {
+    const data = { id: i, enquiryData: e };
     dispatch(updateAEnquiry(data));
-  }
+  };
   const deleteEnq = (e) => {
     dispatch(deleteAEnquiry(e));
     setOpen(false);

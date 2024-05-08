@@ -37,37 +37,36 @@ const columns = [
   },
 ];
 
-
 function ViewOrder() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const orderId = location.pathname.split("/")[3]
-  useEffect(()=>{
-    dispatch(getAOrder(orderId))
-  },[orderId]);
-  
-  const orderState = useSelector((state)=> state?.auth?.singleOrder?.orders);
+  const orderId = location.pathname.split("/")[3];
+  useEffect(() => {
+    dispatch(getAOrder(orderId));
+  }, [orderId]);
+
+  const orderState = useSelector((state) => state?.auth?.singleOrder?.orders);
   const data1 = [];
-for (let i = 0; i < orderState?.orderItems?.length; i++) {
-  data1.push({
-    key: i+1,
-    name: orderState?.orderItems[i]?.product?.title,
-    brand: orderState?.orderItems[i]?.product?.brand,
-    count: orderState?.orderItems[i]?.quantity,
-    color: orderState?.orderItems[i]?.color?.title,
-    amount: orderState?.orderItems[i]?.product?.price,
-    action: (
-      <>
-        <Link to="/" className=" fs-3 text-danger">
-          <BiEdit />
-        </Link>
-        <Link className="ms-3 fs-3 text-danger" to="/">
-          <AiFillDelete />
-        </Link>
-      </>
-    ),
-  });
-}
+  for (let i = 0; i < orderState?.orderItems?.length; i++) {
+    data1.push({
+      key: i + 1,
+      name: orderState?.orderItems[i]?.product?.title,
+      brand: orderState?.orderItems[i]?.product?.brand,
+      count: orderState?.orderItems[i]?.quantity,
+      color: orderState?.orderItems[i]?.color?.title,
+      amount: orderState?.orderItems[i]?.product?.price,
+      action: (
+        <>
+          <Link to="/" className=" fs-3 text-danger">
+            <BiEdit />
+          </Link>
+          <Link className="ms-3 fs-3 text-danger" to="/">
+            <AiFillDelete />
+          </Link>
+        </>
+      ),
+    });
+  }
   return (
     <div>
       <h3 className="mb-4">View Order</h3>

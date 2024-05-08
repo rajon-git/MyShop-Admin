@@ -45,16 +45,15 @@ function Customers() {
 
   return (
     <div className="container">
-  <div className="row">
-    <div className="col">
-      <h3 className="mb-4">Customers</h3>
-      <div className="table-responsive">
-        <Table columns={columns} dataSource={data1} />
+      <div className="row">
+        <div className="col">
+          <h3 className="mb-4">Customers</h3>
+          <div className="table-responsive">
+            <Table columns={columns} dataSource={data1} />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
   );
 }
 

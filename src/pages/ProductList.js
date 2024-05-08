@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -15,7 +16,11 @@ const columns = [
     title: "Image",
     dataIndex: "images",
     render: (images) => (
-      <img src={images[0]?.url} alt="Product" style={{ width: 50, height: 50 }} />
+      <img
+        src={images[0]?.url}
+        alt="Product"
+        style={{ width: 50, height: 50 }}
+      />
     ),
   },
   {
@@ -50,6 +55,15 @@ const columns = [
 
 const Productlist = () => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [productId, setProductId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setProductId(e);
+  };
+  const hideModal = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -66,12 +80,16 @@ const Productlist = () => {
     price: `${product.price}`,
     action: (
       <>
-        <Link to="/" className="fs-3 text-danger">
+        <Link to={`/admin/product/${product._id}`} className="fs-3 text-danger">
           <BiEdit />
         </Link>
-        <Link className="ms-3 fs-3 text-danger" to="/">
-          <AiFillDelete />
-        </Link>
+        <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(product._id)}
+          >
+            <AiFillDelete />
+          </button>
+        
       </>
     ),
   }));
@@ -88,6 +106,15 @@ const Productlist = () => {
           responsive
         />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          // deleteBrand(brandId);
+          
+        }}
+        title="Are you sure, want to delete this brand?"
+      />
     </div>
   );
 };

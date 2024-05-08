@@ -43,22 +43,28 @@ function Orders() {
     dispatch(updateAOrder({ id, status }));
   };
 
-
   for (let i = 0; i < orderState.length; i++) {
     data.push({
       key: i + 1,
-      name: orderState[i]?.user?.firstName + " " + orderState[i]?.user?.lastName,
-      product: <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>,
+      name:
+        orderState[i]?.user?.firstName + " " + orderState[i]?.user?.lastName,
+      product: (
+        <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>
+      ),
       amount: orderState[i]?.totalPriceAfterDiscount + 100, // Adjusted as per your requirement
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (
         <select
           name=""
           defaultValue={orderState[i]?.orderStatus}
-          onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)}
+          onChange={(e) =>
+            updateOrderStatus(orderState[i]?._id, e.target.value)
+          }
           className="form-control form-select"
         >
-          <option value="ordered" disabled selected>Ordered</option>
+          <option value="ordered" disabled selected>
+            Ordered
+          </option>
           <option value="accept">Accept</option>
           <option value="cancel">Cancel</option>
           <option value="processed">Processed</option>
