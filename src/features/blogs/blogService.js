@@ -3,7 +3,16 @@ import { base_url } from "../../utils/base_url";
 import { config } from "../../utils/axiosConfig";
 
 const createBlog = async (blog) => {
-  const response = await axios.post(`${base_url}blog/`, blog, config);
+  const response = await axios.post(`${base_url}blog/`, blog, {
+    headers: {
+      Authorization: `Bearer ${
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user")).token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  });
   return response.data;
 };
 
@@ -12,7 +21,16 @@ const getBlogs = async () => {
   return response.data;
 };
 const getBlog = async (id) => {
-  const response = await axios.get(`${base_url}blog/${id}`, config);
+  const response = await axios.get(`${base_url}blog/${id}`, {
+    headers: {
+      Authorization: `Bearer ${
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user")).token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  });
   return response.data;
 };
 
@@ -23,7 +41,16 @@ const updateBlog = async (blog) => {
       description: blog.blogData.description,
       category: blog.blogData.category,
       images: blog.blogData.images },
-    config
+      {
+        headers: {
+          Authorization: `Bearer ${
+            localStorage.getItem("user") !== null
+              ? JSON.parse(localStorage.getItem("user")).token
+              : ""
+          }`,
+          Accept: "application/json",
+        },
+      }
   );
 
   return response.data;

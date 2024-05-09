@@ -62,16 +62,15 @@ const Addproduct = () => {
     productName,
     updatedProduct,
   } = newProduct;
-  console.log("Product Images:", productImg);
 
- 
   useEffect(() => {
     if (getProductId !== undefined) {
+      dispatch(resetState());
       dispatch(getAProduct(getProductId));
     } else {
       dispatch(resetState());
     }
-  }, [getProductId]);
+  }, [dispatch,getProductId]);
 
   useEffect(() => {
     dispatch(resetState());
@@ -80,19 +79,18 @@ const Addproduct = () => {
     dispatch(getColors());
   }, [dispatch]);
 
-
   useEffect(() => {
     if (isSuccess && createdProduct) {
       toast.success("Product Added Successfullly!");
     }
     if (isSuccess && updatedProduct) {
-      toast.success("Product Updated Successfullly!");
       navigate("/admin/product-list");
     }
     if (isError) {
       toast.error("Something Went Wrong!");
     }
-  }, [isSuccess, isError, isLoading, createdProduct]);
+  }, [isSuccess, isError, isLoading, createdProduct,navigate,updatedProduct]);
+
   const coloropt = [];
   colorState.forEach((i) => {
     coloropt.push({
@@ -110,8 +108,9 @@ const Addproduct = () => {
 
   useEffect(() => {
     formik.values.color = color ? color : " ";
-    formik.values.images = img;
+    formik.values.images = img ? img : [];
   }, [color, img]);
+
   console.log(productImg);
   const formik = useFormik({
     initialValues: {
@@ -123,15 +122,26 @@ const Addproduct = () => {
       tags: productTags || "",
       color: productColor || "",
       quantity: productQty || "",
-      images: productImg || "",
+      images: productImg || [],
     },
     validationSchema: schema,
     onSubmit: (values) => {
       if (getProductId !== undefined) {
-        const data = { id: getProductId, productData: values };
-        dispatch(updateAProduct(data));
-        dispatch(resetState());
-      }else{
+        if (!newProduct.productName) {
+          // Product data has not been fetched yet, so fetch it first
+          dispatch(getAProduct(getProductId)).then(() => {
+            // Once product data is fetched, dispatch the update action
+            const data = { id: getProductId, productData: values };
+            dispatch(updateAProduct(data));
+            dispatch(resetState());
+          });
+        } else {
+          // Product data has already been fetched, so directly dispatch the update action
+          const data = { id: getProductId, productData: values };
+          dispatch(updateAProduct(data));
+          dispatch(resetState());
+        }
+      } else {
         dispatch(createProducts(values));
         formik.resetForm();
         setColor(null);
@@ -139,7 +149,6 @@ const Addproduct = () => {
           dispatch(resetState());
         }, 3000);
       }
-     
     },
   });
   const handleColors = (e) => {
@@ -149,7 +158,7 @@ const Addproduct = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-      {getProductId !== undefined ? "Edit" : "Add"} Product
+        {getProductId !== undefined ? "Edit" : "Add"} Product
       </h3>
       <div>
         <form
@@ -303,32 +312,33 @@ const Addproduct = () => {
             })}
           </div> */}
           <div className="showimages d-flex flex-wrap gap-3">
-  {newProduct && newProduct.productImg ? (
-    <div className="position-relative">
-      <button
-        type="button"
-        onClick={() => dispatch(delImg(newProduct.productImg.public_id))}
-        className="btn-close position-absolute"
-        style={{ top: "10px", right: "10px" }}
-      ></button>
-      <img src={newProduct?.productImg[0]?.url} alt="" width={200} height={200} />
-    </div>
-  ) : (
-    imgState?.map((i, j) => {
-      return (
-        <div className="position-relative" key={j}>
-          <button
-            type="button"
-            onClick={() => dispatch(delImg(i.public_id))}
-            className="btn-close position-absolute"
-            style={{ top: "10px", right: "10px" }}
-          ></button>
-          <img src={i.url} alt="" width={200} height={200} />
-        </div>
-      );
-    })
-  )}
-</div>
+            {newProduct && newProduct?.productImg && newProduct?.productImg?.length > 0
+              ? newProduct?.productImg?.map((image, index) => (
+                  <div className="position-relative" key={index}>
+                    <button
+                      type="button"
+                      onClick={() => dispatch(delImg(image?.public_id))}
+                      className="btn-close position-absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    ></button>
+                    <img src={image?.url} alt="" width={200} height={200} />
+                  </div>
+                )) : (
+              imgState?.map((i, j) => {
+                return (
+                  <div className="position-relative" key={j}>
+                    <button
+                      type="button"
+                      onClick={() => dispatch(delImg(i.public_id))}
+                      className="btn-close position-absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    ></button>
+                    <img src={i?.url} alt="" width={200} height={200} />
+                  </div>
+                );
+              })
+            )}
+          </div>
 
           <button
             className="btn btn-success border-0 rounded-3 my-5"

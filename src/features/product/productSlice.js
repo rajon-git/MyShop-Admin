@@ -153,7 +153,7 @@ export const productSlice = createSlice({
             state.productQty = action.payload.quantity;
             state.productColor = action.payload.color;
             state.productTags = action.payload.tags;
-            state.productImg = action.payload.images;
+            state.productImg = action.payload.images || [];
           })
           .addCase(getAProduct.rejected, (state, action) => {
             state.isLoading = false;

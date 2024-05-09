@@ -13,7 +13,16 @@ const getProducts = async()=> {
 }
 
 const deleteProduct = async(id)=> {
-    const response = await axios.delete(`${base_url}product/${id}`,config);
+    const response = await axios.delete(`${base_url}product/${id}`,{
+      headers: {
+        Authorization: `Bearer ${
+          localStorage.getItem("user") !== null
+            ? JSON.parse(localStorage.getItem("user")).token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    });
     return response.data;
 }
 

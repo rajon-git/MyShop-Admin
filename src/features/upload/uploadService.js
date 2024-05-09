@@ -18,7 +18,16 @@ const uploadImg = async (data) => {
 const deleteImg = async (id) => {
   const response = await axios.delete(
     `${base_url}upload/delete-img/${id}`,
-    config
+    {
+      headers: {
+        Authorization: `Bearer ${
+          localStorage.getItem("user") !== null
+            ? JSON.parse(localStorage.getItem("user")).token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    }
   );
   return response.data;
 };
