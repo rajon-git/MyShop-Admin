@@ -41,11 +41,11 @@ const Addproduct = () => {
   const [images, setImages] = useState([]);
   const location = useLocation();
   const getProductId = location.pathname.split("/")[3];
-  const brandState = useSelector((state) => state.brand.brands);
-  const catState = useSelector((state) => state.pCategory.pCategories);
-  const colorState = useSelector((state) => state.color.colors);
-  const imgState = useSelector((state) => state.upload.images);
-  const newProduct = useSelector((state) => state.product);
+  const brandState = useSelector((state) => state?.brand?.brands);
+  const catState = useSelector((state) => state?.pCategory?.pCategories);
+  const colorState = useSelector((state) => state?.color?.colors);
+  const imgState = useSelector((state) => state?.upload?.images);
+  const newProduct = useSelector((state) => state?.product);
   const {
     isSuccess,
     isError,
@@ -62,6 +62,8 @@ const Addproduct = () => {
     productName,
     updatedProduct,
   } = newProduct;
+  console.log("Product Images:", productImg);
+
  
   useEffect(() => {
     if (getProductId !== undefined) {
@@ -110,6 +112,7 @@ const Addproduct = () => {
     formik.values.color = color ? color : " ";
     formik.values.images = img;
   }, [color, img]);
+  console.log(productImg);
   const formik = useFormik({
     initialValues: {
       title: productName || "",
@@ -284,7 +287,7 @@ const Addproduct = () => {
               )}
             </Dropzone>
           </div>
-          <div className="showimages d-flex flex-wrap gap-3">
+          {/* <div className="showimages d-flex flex-wrap gap-3">
             {imgState?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
@@ -298,7 +301,35 @@ const Addproduct = () => {
                 </div>
               );
             })}
-          </div>
+          </div> */}
+          <div className="showimages d-flex flex-wrap gap-3">
+  {newProduct && newProduct.productImg ? (
+    <div className="position-relative">
+      <button
+        type="button"
+        onClick={() => dispatch(delImg(newProduct.productImg.public_id))}
+        className="btn-close position-absolute"
+        style={{ top: "10px", right: "10px" }}
+      ></button>
+      <img src={newProduct?.productImg[0]?.url} alt="" width={200} height={200} />
+    </div>
+  ) : (
+    imgState?.map((i, j) => {
+      return (
+        <div className="position-relative" key={j}>
+          <button
+            type="button"
+            onClick={() => dispatch(delImg(i.public_id))}
+            className="btn-close position-absolute"
+            style={{ top: "10px", right: "10px" }}
+          ></button>
+          <img src={i.url} alt="" width={200} height={200} />
+        </div>
+      );
+    })
+  )}
+</div>
+
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
