@@ -3,7 +3,18 @@ import { base_url } from "../../utils/base_url"
 import { config } from "../../utils/axiosConfig";
 
 const createProducts = async(product)=> {
-    const response = await axios.post(`${base_url}product/`,product,config);
+    const response = await axios.post(`${base_url}product/`,product,
+    {
+      headers: {
+        Authorization: `Bearer ${
+          localStorage.getItem("user") !== null
+            ? JSON.parse(localStorage.getItem("user")).token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    }
+    );
     return response.data;
 }
 

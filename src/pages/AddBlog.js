@@ -258,5 +258,4 @@ function AddBlog() {
     </div>
   );
 }
-
 export default AddBlog;
