@@ -9,12 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  createBlogs,
-  getABlog,
-  resetState,
-  updateABlog,
-} from "../features/blogs/blogSlice";
+import { createBlogs, getABlog, resetState, updateABlog } from "../features/blogs/blogSlice";
 import { getBCategories } from "../features/bCategory/bcategorySlice";
 
 let schema = yup.object().shape({
@@ -29,21 +24,46 @@ function AddBlog() {
   const location = useLocation();
   const [images, setImages] = useState([]);
   const getBlogId = location.pathname.split("/")[3];
-  const imgState = useSelector((state) => state.upload.images);
-  const bCatState = useSelector((state) => state.bCategory.bCategories);
-  const blogState = useSelector((state) => state.blog);
-  const {
-    isSuccess,
-    isError,
-    isLoading,
-    createdBlog,
-    blogName,
-    blogDesc,
-    blogCat,
-    blogImg,
-    updatedBlog,
-  } = blogState;
+  useEffect(() => {
+    if (getBlogId !== undefined) {
+      dispatch(getABlog(getBlogId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [getBlogId]);
 
+  useEffect(() => {
+    dispatch(resetState());
+    dispatch(getBCategories());
+  }, [dispatch]);
+
+  const imgState = useSelector((state) => state.upload.images);
+  const bCatState = useSelector((state)=>state.bCategory.bCategories);
+  const blogState = useSelector((state)=>state.blog);
+  const {isSuccess,isError,isLoading,createdBlog,blogName,blogDesc,blogCat,blogImg,updatedBlog} = blogState;
+  useEffect(() => {
+    if (isSuccess && createdBlog) {
+      toast.success("Blog Added Successfullly!");
+    }
+    if (isSuccess && updatedBlog) {
+      toast.success("Blog Updated Successfullly!");
+      navigate("/admin/blog-list");
+    }
+    if (isError) {
+      toast.error("Something Went Wrong!");
+    }
+  }, [isSuccess, isError, isLoading, createdBlog]);
+  const img = [];
+  imgState.forEach((i) => {
+    img.push({
+      public_id: i.public_id,
+      url: i.url,
+    });
+  });
+
+  useEffect(() => {
+    formik.values.images = img;
+  }, [img]);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -67,82 +87,34 @@ function AddBlog() {
       }
     },
   });
-
-  useEffect(() => {
-    if (getBlogId !== undefined) {
-      dispatch(getABlog(getBlogId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [dispatch, getBlogId]);
-
-  useEffect(() => {
-    dispatch(resetState());
-    dispatch(getBCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (isSuccess && createdBlog) {
-      toast.success("Blog Added Successfullly!");
-    }
-    if (isSuccess && updatedBlog) {
-      toast.success("Blog Updated Successfullly!");
-      navigate("/admin/blog-list");
-    }
-    if (isError) {
-      toast.error("Something Went Wrong!");
-    }
-  }, [isSuccess, isError, isLoading, createdBlog]);
-
-  const img = [];
-  imgState.forEach((i) => {
-    img.push({
-      public_id: i.public_id,
-      url: i.url,
-    });
-  });
-
-  useEffect(() => {
-    formik.values.images = img;
-  }, [img]);
-
-  console.log(blogState.blogImg);
-
   return (
     <div>
       <h3 className="mb-4 title">
-        {getBlogId !== undefined ? "Edit" : "Add"} Blog
+      {getBlogId !== undefined ? "Edit" : "Add"} Blog
       </h3>
       <div className="">
-        <form action="" onSubmit={formik.handleSubmit}>
+        <form action=""  onSubmit={formik.handleSubmit}>
           <div className="mt-4">
-            <CustomInput
-              type="text"
-              label="Enter Product Title"
-              name="title"
-              onChng={formik.handleChange("title")}
-              onBlr={formik.handleBlur("title")}
-              val={formik.values.title}
-            />
+            <CustomInput type="text" label="Enter Product Title"
+            name="title"
+            onChng={formik.handleChange("title")}
+            onBlr={formik.handleBlur("title")}
+            val={formik.values.title} />
           </div>
           <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
-          <select
-            name="category"
+          <select  name="category"
             onChange={formik.handleChange("category")}
             onBlur={formik.handleBlur("category")}
-            value={formik.values.category}
-            className="form-control py-3 mb-3 mt-3"
-            id=""
-          >
+            value={formik.values.category} className="form-control py-3 mb-3 mt-3" id="">
             <option value="">Select Blog Category</option>
-            {bCatState.map((i, j) => {
-              return (
+            {bCatState.map((i,j)=>{
+              return(
                 <option key={j} value={i.title}>
                   {i.title}
                 </option>
-              );
+              )
             })}
           </select>
           <div className="error">
@@ -155,7 +127,7 @@ function AddBlog() {
             onChange={formik.handleChange("description")}
             value={formik.values.description}
           />
-          <div className="error">
+           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
           <div className="bg-white border-1 p-5 text-center">
@@ -174,7 +146,7 @@ function AddBlog() {
               )}
             </Dropzone>
           </div>
-          {/* <div className="showimages d-flex flex-wrap mt-3 gap-3">
+          <div className="showimages d-flex flex-wrap mt-3 gap-3">
             {imgState?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
@@ -188,64 +160,6 @@ function AddBlog() {
                 </div>
               );
             })}
-          </div> */}
-          {/* <div className="showimages d-flex flex-wrap gap-3">
-            {blogState && blogState?.blogImg && blogState?.blogImg?.length > 0 ? (
-              <div className="position-relative">
-                <button
-                  type="button"
-                  onClick={() =>
-                    dispatch(delImg(blogState?.blogImg[0]?.public_id))
-                  }
-                  className="btn-close position-absolute"
-                  style={{ top: "10px", right: "10px" }}
-                ></button>
-                <img
-                  src={blogState?.blogImg[0]?.url}
-                  alt=""
-                  width={200}
-                  height={200}
-                />
-              </div>
-            ) : (
-              imgState.map((i, j) => (
-                <div className="position-relative" key={j}>
-                  <button
-                    type="button"
-                    onClick={() => dispatch(delImg(i.public_id))}
-                    className="btn-close position-absolute"
-                    style={{ top: "10px", right: "10px" }}
-                  ></button>
-                  <img src={i.url} alt="" width={200} height={200} />
-                </div>
-              ))
-            )}
-          </div> */}
-
-          <div className="showimages d-flex flex-wrap gap-3">
-            {blogState && blogState.blogImg && blogState.blogImg.length > 0
-              ? blogState.blogImg.map((image, index) => (
-                  <div className="position-relative" key={index}>
-                    <button
-                      type="button"
-                      onClick={() => dispatch(delImg(image.public_id))}
-                      className="btn-close position-absolute"
-                      style={{ top: "10px", right: "10px" }}
-                    ></button>
-                    <img src={image.url} alt="" width={200} height={200} />
-                  </div>
-                ))
-              : imgState.map((image, index) => (
-                  <div className="position-relative" key={index}>
-                    <button
-                      type="button"
-                      onClick={() => dispatch(delImg(image.public_id))}
-                      className="btn-close position-absolute"
-                      style={{ top: "10px", right: "10px" }}
-                    ></button>
-                    <img src={image.url} alt="" width={200} height={200} />
-                  </div>
-                ))}
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-3"
@@ -258,4 +172,5 @@ function AddBlog() {
     </div>
   );
 }
+
 export default AddBlog;
