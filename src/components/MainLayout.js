@@ -13,10 +13,14 @@ import { IoMdColorFill } from "react-icons/io";
 import { AiOutlinePicLeft, AiOutlinePicRight } from "react-icons/ai";
 import { Layout, Menu, Button, theme } from "antd";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [orderCount, setOrderCount] = useState(0);
+  const userState = useSelector((state)=>state?.auth?.user);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -202,8 +206,8 @@ const MainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">Rajon</h5>
-                <p className="mb-0">rajon.zhsust15@gmail.com</p>
+                <h5 className="mb-0">{userState && userState?.firstName}</h5>
+                <p className="mb-0">{userState && userState?.email}</p>
               </div>
               <div
                 className="dropdown-menu"
@@ -213,7 +217,7 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
+                    to={userState !== null && "/profile"}
                   >
                     View Profile
                   </Link>

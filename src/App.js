@@ -24,6 +24,7 @@ import ViewEnquiry from './pages/ViewEnquiry';
 import ViewOrder from './pages/ViewOrder';
 import { PrivateRoutes } from './pages/routing/PrivateRoutes';
 import { OpenRoutes } from './pages/routing/OpenRoutes';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -58,6 +59,8 @@ function App() {
           <Route path='product' element={<AddProduct/>}/>
           <Route path='product/:id' element={<AddProduct/>}/>
           <Route path='product-list' element={<ProductList/>}/>
+          <Route path='profile' element={<Profile/>}/>
+
         </Route>
       </Routes>
     </Router>

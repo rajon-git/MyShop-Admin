@@ -20,6 +20,7 @@ const getBlogs = async () => {
   const response = await axios.get(`${base_url}blog/`);
   return response.data;
 };
+
 const getBlog = async (id) => {
   const response = await axios.get(`${base_url}blog/${id}`, {
     headers: {

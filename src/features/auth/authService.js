@@ -20,7 +20,16 @@ const getOrders = async () => {
       Accept: "application/json",
     },
   };
-  const response = await axios.get(`${base_url}user/getallorders`, config);
+  const response = await axios.get(`${base_url}user/getallorders`, {
+    headers: {
+      Authorization: `Bearer ${
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user")).token
+          : ""
+      }`,
+      Accept: "application/json",
+    },
+  });
   return response.data;
 };
 
@@ -70,7 +79,16 @@ const updateOrder = async (data) => {
   const response = await axios.put(
     `${base_url}user/updateorder/${data.id}`,
     { status: data.status },
-    config
+    {
+      headers: {
+        Authorization: `Bearer ${
+          localStorage.getItem("user") !== null
+            ? JSON.parse(localStorage.getItem("user")).token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    }
   );
   return response.data;
 };

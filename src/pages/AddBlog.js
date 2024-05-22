@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ function AddBlog() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   const getBlogId = location.pathname.split("/")[3];
   useEffect(() => {
     if (getBlogId !== undefined) {
@@ -30,7 +30,7 @@ function AddBlog() {
     } else {
       dispatch(resetState());
     }
-  }, [getBlogId]);
+  }, [getBlogId, dispatch]);
 
   useEffect(() => {
     dispatch(resetState());
@@ -52,18 +52,22 @@ function AddBlog() {
     if (isError) {
       toast.error("Something Went Wrong!");
     }
-  }, [isSuccess, isError, isLoading, createdBlog]);
-  const img = [];
-  imgState.forEach((i) => {
-    img.push({
+  }, [isSuccess, isError, isLoading, createdBlog,navigate,updatedBlog]);
+
+  const img = useMemo(() => {
+    return imgState.map((i) => ({
       public_id: i.public_id,
       url: i.url,
-    });
-  });
+    }));
+  }, [imgState]);
+  // const img = [];
+  // imgState.forEach((i) => {
+  //   img.push({
+  //     public_id: i.public_id,
+  //     url: i.url,
+  //   });
+  // });
 
-  useEffect(() => {
-    formik.values.images = img;
-  }, [img]);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -87,6 +91,10 @@ function AddBlog() {
       }
     },
   });
+
+  useEffect(() => {
+    formik.values.images = img;
+  }, [img]);
   return (
     <div>
       <h3 className="mb-4 title">
@@ -147,7 +155,7 @@ function AddBlog() {
             </Dropzone>
           </div>
           <div className="showimages d-flex flex-wrap mt-3 gap-3">
-            {imgState?.map((i, j) => {
+            {/* {imgState?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
                   <button
@@ -159,7 +167,33 @@ function AddBlog() {
                   <img src={i.url} alt="" width={200} height={200} />
                 </div>
               );
-            })}
+            })} */}
+            {blogState && blogState?.blogImg && blogState?.blogImg?.length > 0
+              ? blogState?.blogImg?.map((image, index) => (
+                  <div className="position-relative" key={index}>
+                    <button
+                      type="button"
+                      onClick={() => dispatch(delImg(image?.public_id))}
+                      className="btn-close position-absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    ></button>
+                    <img src={image?.url} alt="" width={200} height={200} />
+                  </div>
+                )) : (
+              imgState?.map((i, j) => {
+                return (
+                  <div className="position-relative" key={j}>
+                    <button
+                      type="button"
+                      onClick={() => dispatch(delImg(i.public_id))}
+                      className="btn-close position-absolute"
+                      style={{ top: "10px", right: "10px" }}
+                    ></button>
+                    <img src={i?.url} alt="" width={200} height={200} />
+                  </div>
+                );
+              })
+            )}
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-3"

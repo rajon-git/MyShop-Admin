@@ -32,8 +32,8 @@ const columns = [
     dataIndex: "amount",
   },
   {
-    title: "Status",
-    dataIndex: "status",
+    title: "Payment Method",
+    dataIndex: "payment",
   },
 ];
 
@@ -55,16 +55,7 @@ function ViewOrder() {
       count: orderState?.orderItems[i]?.quantity,
       color: orderState?.orderItems[i]?.color?.title,
       amount: orderState?.orderItems[i]?.product?.price,
-      action: (
-        <>
-          <Link to="/" className=" fs-3 text-danger">
-            <BiEdit />
-          </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
-            <AiFillDelete />
-          </Link>
-        </>
-      ),
+      payment: orderState?.paymentInfo?.method,
     });
   }
   return (

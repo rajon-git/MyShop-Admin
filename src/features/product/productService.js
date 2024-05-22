@@ -62,7 +62,16 @@ const updateProduct = async (product) => {
         tags: product.productData.tags,
         quantity: product.productData.quantity,
         images: product.productData.images },
-      config
+        {
+          headers: {
+            Authorization: `Bearer ${
+              localStorage.getItem("user") !== null
+                ? JSON.parse(localStorage.getItem("user")).token
+                : ""
+            }`,
+            Accept: "application/json",
+          },
+        }
     );
     return response.data;
 };

@@ -12,6 +12,9 @@ const columns = [
   {
     title: "No.",
     dataIndex: "key",
+    key: "key",
+    sorter: (a, b) => b.key - a.key,
+    defaultSortOrder: 'descend',
   },
   {
     title: "Customer",

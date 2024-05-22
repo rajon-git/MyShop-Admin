@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useMemo, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -38,9 +38,10 @@ const Addproduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [color, setColor] = useState([]);
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   const location = useLocation();
   const getProductId = location.pathname.split("/")[3];
+
   const brandState = useSelector((state) => state?.brand?.brands);
   const catState = useSelector((state) => state?.pCategory?.pCategories);
   const colorState = useSelector((state) => state?.color?.colors);
@@ -62,6 +63,7 @@ const Addproduct = () => {
     productName,
     updatedProduct,
   } = newProduct;
+  let colorTitle = productColor ? productColor.map((color) => color ? color.title : null) : [];
 
   useEffect(() => {
     if (getProductId !== undefined) {
@@ -98,20 +100,20 @@ const Addproduct = () => {
       value: i._id,
     });
   });
-  const img = [];
-  imgState.forEach((i) => {
-    img.push({
+  const img = useMemo(() => {
+    return imgState.map((i) => ({
       public_id: i.public_id,
       url: i.url,
-    });
-  });
+    }));
+  }, [imgState]);
+  // const img = [];
+  // imgState.forEach((i) => {
+  //   img.push({
+  //     public_id: i.public_id,
+  //     url: i.url,
+  //   });
+  // });
 
-  useEffect(() => {
-    formik.values.color = color ? color : " ";
-    formik.values.images = img ? img : [];
-  }, [color, img]);
-
-  console.log(productImg);
   const formik = useFormik({
     initialValues: {
       title: productName || "",
@@ -120,14 +122,14 @@ const Addproduct = () => {
       brand: productBrand || "",
       category: productCat || "",
       tags: productTags || "",
-      color: productColor || "",
+      color:  colorTitle || [],
       quantity: productQty || "",
       images: productImg || [],
     },
     validationSchema: schema,
     onSubmit: (values) => {
       if (getProductId !== undefined) {
-        if (!newProduct.productName) {
+        if (!newProduct?.productName) {
           // Product data has not been fetched yet, so fetch it first
           dispatch(getAProduct(getProductId)).then(() => {
             // Once product data is fetched, dispatch the update action
@@ -151,10 +153,18 @@ const Addproduct = () => {
       }
     },
   });
+
+  useEffect(() => {
+    formik.values.color = color ? color : " ";
+    formik.values.images = img ? img : [];
+  }, [color, img, formik.values]);
+
   const handleColors = (e) => {
     setColor(e);
     console.log(color);
   };
+
+  
   return (
     <div>
       <h3 className="mb-4 title">

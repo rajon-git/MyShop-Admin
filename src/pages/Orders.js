@@ -21,6 +21,10 @@ const columns = [
     dataIndex: "amount",
   },
   {
+    title: "After Discount Amount",
+    dataIndex: "afteramount",
+  },
+  {
     title: "Date",
     dataIndex: "date",
   },
@@ -51,7 +55,8 @@ function Orders() {
       product: (
         <Link to={`/admin/order/${orderState[i]?._id}`}>View Orders</Link>
       ),
-      amount: orderState[i]?.totalPriceAfterDiscount + 100, // Adjusted as per your requirement
+      amount: orderState[i]?.totalPrice, // Adjusted as per your requirement
+      afteramount: orderState[i]?.totalPriceAfterDiscount, // Adjusted as per your requirement
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (
         <select
