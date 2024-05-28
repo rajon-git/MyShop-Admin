@@ -63,7 +63,8 @@ const Addproduct = () => {
     productName,
     updatedProduct,
   } = newProduct;
-  let colorTitle = productColor ? productColor.map((color) => color ? color.title : null) : [];
+  
+  let colorTitle = productColor ? productColor?.map((color) => color ? color?.title : null) : [];
 
   useEffect(() => {
     if (getProductId !== undefined) {
@@ -96,14 +97,15 @@ const Addproduct = () => {
   const coloropt = [];
   colorState.forEach((i) => {
     coloropt.push({
-      label: i.title,
-      value: i._id,
+      label: i?.title,
+      value: i?._id,
     });
   });
+
   const img = useMemo(() => {
     return imgState.map((i) => ({
-      public_id: i.public_id,
-      url: i.url,
+      public_id: i?.public_id,
+      url: i?.url,
     }));
   }, [imgState]);
   // const img = [];
@@ -161,9 +163,7 @@ const Addproduct = () => {
 
   const handleColors = (e) => {
     setColor(e);
-    console.log(color);
   };
-
   
   return (
     <div>

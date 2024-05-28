@@ -61,7 +61,7 @@ const Productlist = () => {
     setOpen(true);
     setProductId(e);
   };
-  console.log(productId)
+  
   const hideModal = () => {
     setOpen(false);
   };
@@ -73,15 +73,15 @@ const Productlist = () => {
 
   const data1 = productState.map((product, index) => ({
     key: index + 1,
-    images: product.images,
-    title: product.title,
-    brand: product.brand,
-    category: product.category,
-    color: product.color,
-    price: `${product.price}`,
+    images: product?.images,
+    title: product?.title,
+    brand: product?.brand,
+    category: product?.category,
+    color: product?.color,
+    price: `${product?.price}`,
     action: (
       <>
-        <Link to={`/admin/product/${product._id}`} className="fs-3 text-danger">
+        <Link to={`/admin/product/${product?._id}`} className="fs-3 text-danger">
           <BiEdit />
         </Link>
         <button
